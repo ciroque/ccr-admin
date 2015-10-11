@@ -1,0 +1,28 @@
+{
+  "name": "ccr-admin",
+  "version": "0.1.0",
+  "authors": [
+    "Steve Wagner <scalawagz@outlook.com>"
+  ],
+  "description": "Administration Web for central-configuration-repository",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "configuration",
+    "admin",
+    "administration",
+    "ccr"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.5"
+  }
+}
