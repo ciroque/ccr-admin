@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-sass --update ./assets/styles/
+sass --update ./src/main/assets/styles/
 
-coffee -c -m assets/scripts/
+coffee -c -m ./src/main/assets/scripts/
