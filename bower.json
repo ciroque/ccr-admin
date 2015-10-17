@@ -23,6 +23,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-sass-official": "~3.3.5"
+    "bootstrap-sass-official": "~3.3.5",
+    "jasmine-core": "~2.3.4"
   }
 }
