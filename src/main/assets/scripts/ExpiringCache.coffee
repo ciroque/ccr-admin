@@ -1,6 +1,6 @@
 window.ExpiringCache = class ExpiringCache
   class CacheStats
-    constructor: (opts) ->
+    constructor: () ->
       @cacheAttempts = 0
       @cacheHits = 0
       @cacheMisses = 0
@@ -13,7 +13,7 @@ window.ExpiringCache = class ExpiringCache
   put: (key, value, ttl) ->
     item = {k: key, v: value, expires: new Date().getTime() + (ttl * 1000)}
     @items.push(item)
-    console.log(JSON.stringify(@items))
+    @
 
   getLength: () -> @items.length
 
