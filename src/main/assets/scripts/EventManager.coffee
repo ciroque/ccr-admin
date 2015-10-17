@@ -1,4 +1,6 @@
-class EventManager
+"use strict"
+
+window.EventManager = class EventManager
   constructor: (@logger) ->
     @handlerMap = []
 
@@ -8,4 +10,9 @@ class EventManager
     @
 
   isRegistered: (name) ->
-    @handlerMap[name] && true
+    @handlerMap[name] != undefined
+
+  dispatchEvent: (name, args) ->
+    handlers = if @handlerMap[name] then @handlerMap[name] else []
+    handler args for handler in handlers when handlers?
+    @
