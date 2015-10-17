@@ -1,3 +1,5 @@
+"use strict"
+
 describe 'EventManager', ->
   EVENT_ONE = "EVENT_ONE"
   EVENT_TWO = "EVENT_TWO"

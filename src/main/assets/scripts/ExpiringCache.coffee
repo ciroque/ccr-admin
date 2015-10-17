@@ -1,3 +1,5 @@
+"use strict"
+
 window.ExpiringCache = class ExpiringCache
   class CacheStats
     constructor: () ->

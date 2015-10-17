@@ -1,3 +1,5 @@
+"use strict"
+
 describe 'ExpiringCache', ->
   KEY = "KEY"
   UNKEY = "UNKEY"
