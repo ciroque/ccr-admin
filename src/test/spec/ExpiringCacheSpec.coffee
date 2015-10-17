@@ -78,9 +78,10 @@ describe 'ExpiringCache', ->
     @expiringCache.get(KEY)
     expect(@expiringCache.getStats().cacheExpiries).toBe 1
     @expiringCache.get(KEY)
-    expect(@expiringCache.getStats().cacheExpiries).toBe 2
+    expect(@expiringCache.getStats().cacheExpiries).toBe 1
     @expiringCache.get(KEY)
     @expiringCache.get(KEY)
     @expiringCache.get(KEY)
     @expiringCache.get(KEY)
-    expect(@expiringCache.getStats().cacheExpiries).toBe 6
+    expect(@expiringCache.getStats().cacheExpiries).toBe 1
+    expect(@expiringCache.getStats().cacheMisses).toBe 5
