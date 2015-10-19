@@ -9,7 +9,7 @@ describe "CentralConfigurationRepositoryClient", ->
   TODAY = new Date()
   YESTERDAY = new Date().setDate(TODAY.getDate() - 1)
   TOMORROW = new Date().setDate(TODAY.getDate() + 1)
-  URL = 'http://localhost:80/ccr/setting/'
+  URL = 'http://localhost:80/ccr/settings/'
   EVT_SUCCESS = 'TestSuccessfulEvent'
   EVT_FAILURE = 'TestFailedEvent'
   ERROR_MSG = "THIS IS A FAILURE MESSAGE"
@@ -166,7 +166,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}")
 
     it 'handles an unsuccessful call to retrieve applications', ->
       querySuccessFired = false
@@ -184,7 +184,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}")
 
   describe 'retrieveScopes', ->
     it 'handles a successful call to retrieve scopes', ->
@@ -203,7 +203,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
 
     it 'handles an unsuccessful call to retrieve scopes', ->
       querySuccessFired = false
@@ -221,7 +221,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
 
   describe 'retrieveSettings', ->
     it 'handles a successful call to retrieve settings', ->
@@ -240,7 +240,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
 
     it 'handles an unsuccessful call to retrieve settings', ->
       querySuccessFired = false
@@ -258,7 +258,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
 
   describe 'retrieveConfigurations', ->
     it 'handles a successful call to retrieve configurations', ->
@@ -277,7 +277,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
 
     it 'handles an unsuccessful call to retrieve configurations', ->
       scopeQuerySuccessFired = false
@@ -295,7 +295,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(scopeQuerySuccessFired).toBe false
       expect(scopeQueryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
 
     it 'uses the cache for settings', ->
       querySuccessFired = 0
@@ -318,7 +318,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe 3
       expect(queryFailureFired).toBe 0
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
       expect(cacheStats.cacheAttempts).toBe 3
       expect(cacheStats.cacheHits).toBe 1
       expect(cacheStats.cacheMisses).toBe 1
