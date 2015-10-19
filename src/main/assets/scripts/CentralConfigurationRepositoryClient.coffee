@@ -44,8 +44,8 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
     @logger.debug('CentralConfigurationRepositoryClient::retrieveScopes')
     @buildWebQuery(
       "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}/#{application}",
-      Strings.Events.ServiceQueries.ApplicationQuerySuccess,
-      Strings.Events.ServiceQueries.ApplicationQueryFailure
+      Strings.Events.ServiceQueries.ScopeQuerySuccess,
+      Strings.Events.ServiceQueries.ScopeQueryFailure
     ).execute()
 
   retrieveSettings: (environment, application, scope) -> []

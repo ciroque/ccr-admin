@@ -177,8 +177,8 @@ describe "CentralConfigurationRepositoryClient", ->
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; scopeQuerySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; scopeQueryFailureFired = true
 
-      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQuerySuccess, successEventHandler)
-      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQueryFailure, failedEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ScopeQuerySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ScopeQueryFailure, failedEventHandler)
 
       client.retrieveScopes(ENVIRONMENTS[0], APPLICATIONS[0])
 
@@ -196,8 +196,8 @@ describe "CentralConfigurationRepositoryClient", ->
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; scopeQuerySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; scopeQueryFailureFired = true
 
-      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQuerySuccess, successEventHandler)
-      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQueryFailure, failedEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ScopeQuerySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ScopeQueryFailure, failedEventHandler)
 
       client.retrieveScopes(ENVIRONMENTS[0], APPLICATIONS[0])
 
