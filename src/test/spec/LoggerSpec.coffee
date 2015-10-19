@@ -6,7 +6,7 @@ describe 'Logger', ->
   TEST_MESSAGE = "TEST MESSAGE"
 
   beforeEach(() ->
-    @logSink = new LoggingSink()
+    @logSink = new TestLoggingSink()
     @logger = new Logger({ level: LogLevel.ALL, sink: @logSink})
   )
 

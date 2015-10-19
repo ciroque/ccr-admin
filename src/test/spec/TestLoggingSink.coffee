@@ -1,4 +1,4 @@
-window.LoggingSink = class LoggingSink
+window.TestLoggingSink = class TestLoggingSink
   @events = null
   constructor: () ->
     @events = []
