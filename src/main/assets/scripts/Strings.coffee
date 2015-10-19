@@ -2,16 +2,16 @@
 window.Strings = class @Strings
   class @Events
     class @ServiceQueries
-      @EnvironmentQuerySuccess    = 'ENVQS'
-      @EnvironmentQueryFailure    = 'ENVQF'
-      @ApplicationQuerySuccess    = 'APPQS'
-      @ApplicationQueryFailure    = 'APPQF'
-      @ScopeQuerySuccess          = 'SCPQS'
-      @ScopeQueryFailure          = 'SCPQF'
-      @SettingQuerySuccess        = 'STGQS'
-      @SettingQueryFailure        = 'STGQF'
-      @ConfigurationQuerySuccess  = 'CFGQS'
-      @ConfigurationQueryFailure  = 'CFGQF'
+      @EnvironmentQuerySuccess    = 'ENVQRYS'
+      @EnvironmentQueryFailure    = 'ENVQRYF'
+      @ApplicationQuerySuccess    = 'APPQRYS'
+      @ApplicationQueryFailure    = 'APPQRYF'
+      @ScopeQuerySuccess          = 'SCPQRYS'
+      @ScopeQueryFailure          = 'SCPQRYF'
+      @SettingQuerySuccess        = 'STGQRYS'
+      @SettingQueryFailure        = 'STGQRYF'
+      @ConfigurationQuerySuccess  = 'CFGQRYS'
+      @ConfigurationQueryFailure  = 'CFGQRYF'
 
   class @ServiceLocation
     @CcrProtocol = 'http'
@@ -20,6 +20,6 @@ window.Strings = class @Strings
 
   class @ServicePaths
     @RootPath = 'ccr'
-    @SettingSegment = 'setting'
+    @SettingSegment = 'settings'
 
 
