@@ -5,22 +5,6 @@ describe 'Logger', ->
   @logSink = null
   TEST_MESSAGE = "TEST MESSAGE"
 
-  class LoggingSink
-    @events = null
-    constructor: () ->
-      @events = []
-    log: (msg) ->
-      @events.push(msg)
-    getEvents: () ->
-      clone = (o) ->
-        c = {}
-        for k of o
-          c[k] = o[k]
-        c
-      clone(@events)
-    getEventCount: () ->
-      @events.length
-
   beforeEach(() ->
     @logSink = new LoggingSink()
     @logger = new Logger({ level: LogLevel.ALL, sink: @logSink})
