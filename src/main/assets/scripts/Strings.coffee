@@ -4,6 +4,8 @@ window.Strings = class @Strings
     class @ServiceQueries
       @EnvironmentQuerySuccess = 'ENVQS'
       @EnvironmentQueryFailure = 'ENVQF'
+      @ApplicationQuerySuccess = 'APPQS'
+      @ApplicationQueryFailure = 'APPQF'
   class @ServiceLocation
     @CcrProtocol = 'http'
     @CcrHost = 'localhost'

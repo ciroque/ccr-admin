@@ -26,13 +26,19 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
 
   retrieveEnvironments: ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveEnvironments')
-    buildWebQuery(
+    @buildWebQuery(
       "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}",
-      Strings.Events.EnvironmentQuerySuccess,
-      Strings.Events.EnvironmentQueryFailure
+      Strings.Events.ServiceQueries.EnvironmentQuerySuccess,
+      Strings.Events.ServiceQueries.EnvironmentQueryFailure
     ).execute()
 
-  retrieveApplications: (environment) -> []
+  retrieveApplications: (environment) ->
+    @logger.debug('CentralConfigurationRepositoryClient::retrieveEnvironments')
+    @buildWebQuery(
+      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}",
+      Strings.Events.ServiceQueries.ApplicationQuerySuccess,
+      Strings.Events.ServiceQueries.ApplicationQueryFailure
+    ).execute()
 
   retrieveScopes: (environment, application) -> []
 

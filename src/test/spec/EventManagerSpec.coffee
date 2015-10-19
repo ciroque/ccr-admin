@@ -5,8 +5,14 @@ describe 'EventManager', ->
   EVENT_TWO = "EVENT_TWO"
   EVENT_THREE = "EVENT_THREE"
   @eventManager = null
+  @logSink = null
+  @logger = null
 
-  beforeEach(() -> @eventManager = new EventManager())
+  beforeEach(() ->
+    @logSink = new TestLoggingSink()
+    @logger = new Logger({sink: @logSink})
+    @eventManager = new EventManager(@logger)
+  )
 
   it 'returns false for an event that is not registered', ->
     expect(@eventManager.isRegistered("NOPE")).toBe false
