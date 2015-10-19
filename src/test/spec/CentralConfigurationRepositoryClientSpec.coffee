@@ -107,6 +107,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(environmentQuerySuccessFired).toBe true
       expect(environmentQueryFailureFired).toBe false
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting")
 
     it 'handles an unsuccessful call to retrieve environments', ->
       environmentQuerySuccessFired = false
@@ -124,6 +125,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(environmentQuerySuccessFired).toBe false
       expect(environmentQueryFailureFired).toBe true
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting")
 
   describe 'retrieveApplications', ->
     it 'handles a successful call to retrieve applications', ->
@@ -142,6 +144,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(applicationQuerySuccessFired).toBe true
       expect(applicationQueryFailureFired).toBe false
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}")
 
 
     it 'handles an unsuccessful call to retrieve applications', ->
@@ -158,6 +161,47 @@ describe "CentralConfigurationRepositoryClient", ->
 
       client.retrieveApplications(ENVIRONMENTS[0])
 
+      @logSnk.dumpEvents()
+
       expect(applicationQuerySuccessFired).toBe false
       expect(applicationQueryFailureFired).toBe true
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}")
+
+  describe 'retrieveScopes', ->
+    it 'handles a successful call to retrieve scopes', ->
+      scopeQuerySuccessFired = false
+      scopeQueryFailureFired = false
+      mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+      successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; scopeQuerySuccessFired = true
+      failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; scopeQueryFailureFired = true
+
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQuerySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQueryFailure, failedEventHandler)
+
+      client.retrieveScopes(ENVIRONMENTS[0], APPLICATIONS[0])
+
+      expect(scopeQuerySuccessFired).toBe true
+      expect(scopeQueryFailureFired).toBe false
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
+
+
+    it 'handles an unsuccessful call to retrieve scopes', ->
+      scopeQuerySuccessFired = false
+      scopeQueryFailureFired = false
+      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+      successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; scopeQuerySuccessFired = true
+      failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; scopeQueryFailureFired = true
+
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQuerySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ApplicationQueryFailure, failedEventHandler)
+
+      client.retrieveScopes(ENVIRONMENTS[0], APPLICATIONS[0])
+
+      expect(scopeQuerySuccessFired).toBe false
+      expect(scopeQueryFailureFired).toBe true
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
 
