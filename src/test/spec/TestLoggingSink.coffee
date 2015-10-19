@@ -13,3 +13,7 @@ window.TestLoggingSink = class TestLoggingSink
     clone(@events)
   getEventCount: () ->
     @events.length
+
+  dumpEvents: () ->
+    console.log(event) for event in @events
+    @events

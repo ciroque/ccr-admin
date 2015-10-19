@@ -10,6 +10,7 @@ describe "CentralConfigurationRepositoryClient", ->
   EVT_SUCCESS = 'TestSuccessfulEvent'
   EVT_FAILURE = 'TestFailedEvent'
   ERROR_MSG = "THIS IS A FAILURE MESSAGE"
+  ENVIRONMENTS = ['PROD', 'QA', 'DEV', 'DEFAULT']
 
   beforeEach(() ->
     @logSnk = new TestLoggingSink()
@@ -31,10 +32,9 @@ describe "CentralConfigurationRepositoryClient", ->
   it 'calls the provided success handler with the appropriate arguments', ->
     successCalled = false
     errorCalled = false
-    resultsToReturn = ['PROD', 'QA', 'DEV', 'DEFAULT']
-    mockAjaxProvider = new MockAjaxProvider(@logger, { results: resultsToReturn })
+    mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
     client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
-    successHandler = (result) -> expect(result).toBe resultsToReturn; successCalled = true
+    successHandler = (result) -> expect(result).toBe ENVIRONMENTS; successCalled = true
     errorHandler = (error) -> fail("error handler should not have been called!"); errorCalled = true
     webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
     webQuery.execute()
@@ -46,12 +46,11 @@ describe "CentralConfigurationRepositoryClient", ->
   it 'dispatches the success event via the event manager', ->
     successEventFired = false
     failedEventFired = false
-    resultsToReturn = ['PROD', 'QA', 'DEV', 'DEFAULT']
-    mockAjaxProvider = new MockAjaxProvider(@logger, { results: resultsToReturn })
+    mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
     client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
-    successEventHandler = (args) -> expect(args).toBe resultsToReturn; console.log("successEventHandler: #{args}"); successEventFired = true
+    successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; successEventFired = true
     @evtMgr.registerHandler(EVT_SUCCESS, successEventHandler)
-    failedEventHandler = (args) -> console.log("failedEventHandler: #{args}"); failedEventFired = true
+    failedEventHandler = (args) -> failedEventFired = true
     @evtMgr.registerHandler(EVT_FAILURE, failedEventHandler)
     webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE)
     webQuery.execute()
@@ -76,14 +75,51 @@ describe "CentralConfigurationRepositoryClient", ->
   it 'dispatches the failure event via the event manager', ->
     successEventFired = false
     failedEventFired = false
-    resultsToReturn = ['PROD', 'QA', 'DEV', 'DEFAULT']
+
     mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
     client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
-    successEventHandler = (args) -> expect(args).toBe resultsToReturn; console.log("successEventHandler: #{args}"); successEventFired = true
+    successEventHandler = (args) -> successEventFired = true; expect(args).toBe ENVIRONMENTS
     @evtMgr.registerHandler(EVT_SUCCESS, successEventHandler)
-    failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; failedEventFired = true
+    failedEventHandler = (args) -> failedEventFired = true; expect(args).toBe ERROR_MSG
     @evtMgr.registerHandler(EVT_FAILURE, failedEventHandler)
     webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE)
     webQuery.execute()
     expect(successEventFired).toBe false
     expect(failedEventFired).toBe true
+
+  it 'handles a successful call to retrieve environments', ->
+    environmentQuerySuccessFired = false
+    environmentQueryFailureFired = false
+    mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
+    client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+    successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; environmentQuerySuccessFired = true
+    failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; environmentQueryFailureFired = true
+
+    @evtMgr.registerHandler(Strings.Events.ServiceQueries.EnvironmentQuerySuccess, successEventHandler)
+    @evtMgr.registerHandler(Strings.Events.ServiceQueries.EnvironmentQueryFailure, failedEventHandler)
+
+    webQuery = client.buildWebQuery(URL, Strings.Events.ServiceQueries.EnvironmentQuerySuccess, Strings.Events.ServiceQueries.EnvironmentQueryFailure)
+    webQuery.execute()
+
+    expect(environmentQuerySuccessFired).toBe true
+    expect(environmentQueryFailureFired).toBe false
+
+  it 'handles an unsuccessful call to retrieve environments', ->
+    environmentQuerySuccessFired = false
+    environmentQueryFailureFired = false
+    mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
+    client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+    successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; environmentQuerySuccessFired = true
+    failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; environmentQueryFailureFired = true
+
+    @evtMgr.registerHandler(Strings.Events.ServiceQueries.EnvironmentQuerySuccess, successEventHandler)
+    @evtMgr.registerHandler(Strings.Events.ServiceQueries.EnvironmentQueryFailure, failedEventHandler)
+
+    webQuery = client.buildWebQuery(URL, Strings.Events.ServiceQueries.EnvironmentQuerySuccess, Strings.Events.ServiceQueries.EnvironmentQueryFailure)
+    webQuery.execute()
+
+    expect(environmentQuerySuccessFired).toBe false
+    expect(environmentQueryFailureFired).toBe true
+

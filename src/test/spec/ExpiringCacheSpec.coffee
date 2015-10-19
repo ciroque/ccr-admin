@@ -11,7 +11,7 @@ describe 'ExpiringCache', ->
     @expiringCache.put("DEFAULT", "DEFAULT_VALUE", 1440)
   )
 
-  afterEach(() -> console.log(JSON.stringify(@expiringCache.getStats())) if @expiringCache)
+#  afterEach(() -> console.log(JSON.stringify(@expiringCache.getStats())) if @expiringCache)
 
   sleep = (ms) ->
     start = new Date().getTime()
