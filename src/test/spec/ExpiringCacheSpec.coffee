@@ -13,10 +13,6 @@ describe 'ExpiringCache', ->
 
 #  afterEach(() -> console.log(JSON.stringify(@expiringCache.getStats())) if @expiringCache)
 
-  sleep = (ms) ->
-    start = new Date().getTime()
-    continue while new Date().getTime() - start < ms
-
   it 'returns null when a key is not found', ->
     item = @expiringCache.get("some_invalid_key")
     expect(item).toBe null
@@ -34,7 +30,7 @@ describe 'ExpiringCache', ->
   it 'returns null when the item has expired', ->
     @expiringCache.put(KEY, VALUE, 1)
     expect(@expiringCache.get(KEY)).toBe(VALUE)
-    sleep(1001)
+    Utils.sleep(1001)
     expect(@expiringCache.get(KEY)).toBe null
 
   it 'increments the CacheStats::cacheAttempts property', ->

@@ -48,8 +48,42 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
       Strings.Events.ServiceQueries.ScopeQueryFailure
     ).execute()
 
-  retrieveSettings: (environment, application, scope) -> []
+  retrieveSettings: (environment, application, scope) ->
+    @logger.debug('CentralConfigurationRepositoryClient::retrieveSettings')
+    @buildWebQuery(
+      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}/#{application}/#{scope}",
+      Strings.Events.ServiceQueries.SettingQuerySuccess,
+      Strings.Events.ServiceQueries.SettingQueryFailure
+    ).execute()
 
-  retrieveConfiguration: (environment, application, scope, setting, sourceId = null) ->
-    # check cache
-    []
+  retrieveConfigurations: (environment, application, scope, setting, sourceId = null) ->
+    @logger.debug('CentralConfigurationRepositoryClient::retrieveConfigurations')
+
+    buildQueryPath = () ->
+      base = "#{environment}/#{application}/#{scope}/#{setting}"
+      if sourceId
+        base + "?sourceId=#{sourceId}"
+      else
+        base
+
+    cache = @cache
+    successHandler = (result) ->
+      cfg = result[0]
+      cache.put(buildQueryPath(), cfg, cfg.temporality.ttl)
+
+    webQuery = @buildWebQuery(
+      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{buildQueryPath()}",
+      Strings.Events.ServiceQueries.ConfigurationQuerySuccess,
+      Strings.Events.ServiceQueries.ConfigurationQueryFailure,
+      successHandler
+    )
+
+    path = buildQueryPath()
+    cfg = @cache.get(path)
+
+    if cfg
+      @logger.debug("CentralConfigurationRepositoryClient::retrieveConfigurations #{path} found in cache")
+      webQuery.success([cfg])
+
+    else
+      webQuery.execute()
