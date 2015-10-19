@@ -9,7 +9,7 @@ describe "CentralConfigurationRepositoryClient", ->
   TODAY = new Date()
   YESTERDAY = new Date().setDate(TODAY.getDate() - 1)
   TOMORROW = new Date().setDate(TODAY.getDate() + 1)
-  URL = 'http://localhost:80/ccr/setting'
+  URL = 'http://localhost:80/ccr/setting/'
   EVT_SUCCESS = 'TestSuccessfulEvent'
   EVT_FAILURE = 'TestFailedEvent'
   ERROR_MSG = "THIS IS A FAILURE MESSAGE"
@@ -44,7 +44,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
   describe 'buildWebQuery', ->
     it 'builds a web query object', ->
-      webQuery = @client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE)
+      webQuery = @client.buildWebQuery("", EVT_SUCCESS, EVT_FAILURE)
       expect(webQuery.lib).toBe $
       expect(webQuery.url).toBe URL
       expect(webQuery.logger).toBe @logger

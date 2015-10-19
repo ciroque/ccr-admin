@@ -11,7 +11,8 @@ window.LogLevel = class LogLevel
 window.Logger = class Logger
   LogLevels = ['ERROR', 'WARN', 'INFO', 'DEBUG'];
 
-  constructor: (@opts = { level: LogLevel.DEBUG, sink: console }) ->
+  constructor: (opts = {}) ->
+    @opts = AppTools.merge({ level: LogLevel.DEBUG, sink: console }, opts)
 
   write: (level, msg) ->
     message = new Date().toISOString() + '\t' + LogLevels[level] + '\t' + msg;

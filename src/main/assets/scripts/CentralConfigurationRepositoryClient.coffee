@@ -1,13 +1,14 @@
 "use strict"
 
 window.CentralConfigurationRepositoryClient = class CentralConfigurationRepositoryClient
-  constructor: (@logger, @eventManager, @opts = { lib: $ }) ->
+  constructor: (@logger, @eventManager, opts = {}) ->
+    @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 80 }}, opts)
     @cache = new ExpiringCache()
 
   buildWebQuery: (url, successEvent, failureEvent, success = null, failure = null) ->
     {
     lib: @opts.lib,
-    url: url,
+    url: "#{@opts.ccrService.protocol}://#{@opts.ccrService.host}:#{@opts.ccrService.port}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{url}",
     logger: @logger,
     eventManager: @eventManager,
     success: (result) ->
@@ -27,7 +28,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
   retrieveEnvironments: ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveEnvironments')
     @buildWebQuery(
-      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}",
+      '',
       Strings.Events.ServiceQueries.EnvironmentQuerySuccess,
       Strings.Events.ServiceQueries.EnvironmentQueryFailure
     ).execute()
@@ -35,7 +36,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
   retrieveApplications: (environment) ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveApplications')
     @buildWebQuery(
-      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}",
+      "#{environment}",
       Strings.Events.ServiceQueries.ApplicationQuerySuccess,
       Strings.Events.ServiceQueries.ApplicationQueryFailure
     ).execute()
@@ -43,7 +44,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
   retrieveScopes: (environment, application) ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveScopes')
     @buildWebQuery(
-      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}/#{application}",
+      "#{environment}/#{application}",
       Strings.Events.ServiceQueries.ScopeQuerySuccess,
       Strings.Events.ServiceQueries.ScopeQueryFailure
     ).execute()
@@ -51,7 +52,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
   retrieveSettings: (environment, application, scope) ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveSettings')
     @buildWebQuery(
-      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{environment}/#{application}/#{scope}",
+      "#{environment}/#{application}/#{scope}",
       Strings.Events.ServiceQueries.SettingQuerySuccess,
       Strings.Events.ServiceQueries.SettingQueryFailure
     ).execute()
@@ -59,9 +60,9 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
   retrieveConfigurations: (environment, application, scope, setting, sourceId = null) ->
     @logger.debug('CentralConfigurationRepositoryClient::retrieveConfigurations')
 
-    buildQueryPath = () ->
+    buildQueryPath = (includeSourceId = false) ->
       base = "#{environment}/#{application}/#{scope}/#{setting}"
-      if sourceId
+      if sourceId && includeSourceId
         base + "?sourceId=#{sourceId}"
       else
         base
@@ -72,7 +73,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
       cache.put(buildQueryPath(), cfg, cfg.temporality.ttl)
 
     webQuery = @buildWebQuery(
-      "#{Strings.ServiceLocation.CcrProtocol}//#{Strings.ServiceLocation.CcrHost}:#{Strings.ServiceLocation.CcrPort}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{buildQueryPath()}",
+      "#{buildQueryPath(true)}",
       Strings.Events.ServiceQueries.ConfigurationQuerySuccess,
       Strings.Events.ServiceQueries.ConfigurationQueryFailure,
       successHandler
