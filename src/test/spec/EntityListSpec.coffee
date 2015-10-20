@@ -94,3 +94,21 @@ describe 'EntityList', ->
     expect(@ele.children[2]).toContain('Amos')
     expect(@ele.children[3]).toContain('Obadiah')
     expect(@ele.children[4]).toContain('Jonah')
+
+  it 'accepts a clear event and clears its contents when received', ->
+    populateEvent = 'FILL'
+    clearEvent = 'EMPTY'
+    opts = {
+      populateEvent: populateEvent,
+      clearEvent: clearEvent,
+      ele: @ele,
+      template: MST_TEMPLATE
+    }
+    entityList = new EntityList(@logger, @eventMgr, opts)
+    entityList.init()
+
+    @eventMgr.dispatchEvent(populateEvent, { environments: ['Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah'] })
+    expect(@ele.children.length).toBe 5
+
+    @eventMgr.dispatchEvent(clearEvent, {})
+    expect(@ele.children.length).toBe 0

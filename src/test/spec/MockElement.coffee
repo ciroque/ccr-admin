@@ -11,8 +11,8 @@ window.MockElement = class MockElement
   append: (child) ->
     @children.push(child)
 
-  executeChild: (index) ->
-    @children[index] if @children[index]
+  empty: () ->
+    @children = []
 
   dumpChildren: () ->
     console.log("#{i}) #{child}") for child, i in @children
