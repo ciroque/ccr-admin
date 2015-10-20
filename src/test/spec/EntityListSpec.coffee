@@ -23,19 +23,60 @@ describe 'EntityList', ->
     @uiTemplates.init()
   )
 
-  it 'accepts an Event Name and appends the template to the given element when the event is raised', ->
+  it 'accepts an Event Name and appends the template to the given element when the event is raised - environments', ->
     opts = {
       populateEvent: POPULATE_EVENT,
       ele: @ele,
       template: MST_TEMPLATE
     }
-
     @entityList = new EntityList(@logger, @eventMgr, opts)
     @entityList.init()
     @eventMgr.dispatchEvent(POPULATE_EVENT, {environments: ['Noah']})
     expect(@ele.children[0]).toBe 'And the winner is: Noah'
 
-    @logSink.dumpEvents()
+  it 'accepts an Event Name and appends the template to the given element when the event is raised - applications', ->
+    opts = {
+      populateEvent: POPULATE_EVENT,
+      ele: @ele,
+      template: MST_TEMPLATE
+    }
+    @entityList = new EntityList(@logger, @eventMgr, opts)
+    @entityList.init()
+    @eventMgr.dispatchEvent(POPULATE_EVENT, {applications: ['Noah']})
+    expect(@ele.children[0]).toBe 'And the winner is: Noah'
+
+  it 'accepts an Event Name and appends the template to the given element when the event is raised - scopes', ->
+    opts = {
+      populateEvent: POPULATE_EVENT,
+      ele: @ele,
+      template: MST_TEMPLATE
+    }
+    @entityList = new EntityList(@logger, @eventMgr, opts)
+    @entityList.init()
+    @eventMgr.dispatchEvent(POPULATE_EVENT, {scopes: ['Noah']})
+    expect(@ele.children[0]).toBe 'And the winner is: Noah'
+
+  it 'accepts an Event Name and appends the template to the given element when the event is raised - settings', ->
+    opts = {
+      populateEvent: POPULATE_EVENT,
+      ele: @ele,
+      template: MST_TEMPLATE
+    }
+    @entityList = new EntityList(@logger, @eventMgr, opts)
+    @entityList.init()
+    @eventMgr.dispatchEvent(POPULATE_EVENT, {settings: ['Noah']})
+    expect(@ele.children[0]).toBe 'And the winner is: Noah'
+
+  it 'accepts an Event Name and appends the template to the given element when the event is raised - unknown', ->
+    opts = {
+      populateEvent: POPULATE_EVENT,
+      ele: @ele,
+      template: MST_TEMPLATE
+    }
+    @entityList = new EntityList(@logger, @eventMgr, opts)
+    @entityList.init()
+    @eventMgr.dispatchEvent(POPULATE_EVENT, {unknown: ['Noah']})
+    expect(@ele.children.length).toBe 0
 
   it 'produces a list of items based on the actual template', ->
     populateEvent = 'REAL_TEMPLATE'
