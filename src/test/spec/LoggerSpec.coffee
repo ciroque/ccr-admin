@@ -69,3 +69,13 @@ describe 'Logger', ->
     logger.info(TEST_MESSAGE)
     logger.warn(TEST_MESSAGE)
     expect(@logSink.getEventCount()).toBe 4
+
+  it 'Allows changing the Log Level', ->
+    logger = new Logger({level: LogLevel.ALL, sink: @logSink})
+    logger.debug(TEST_MESSAGE)
+    logger.error(TEST_MESSAGE)
+    logger.info(TEST_MESSAGE)
+    logger.warn(TEST_MESSAGE)
+    logger.setLogLevel(LogLevel.INFO)
+    logger.debug(TEST_MESSAGE)
+    expect(@logSink.getEventCount()).toBe 4

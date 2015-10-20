@@ -14,6 +14,9 @@ window.Logger = class Logger
   constructor: (opts = {}) ->
     @opts = AppTools.merge({ level: LogLevel.DEBUG, sink: console }, opts)
 
+  setLogLevel: (level) ->
+    @opts.level = level
+
   write: (level, msg) ->
     message = new Date().toISOString() + '\t' + LogLevels[level] + '\t' + msg;
     this.opts.sink.log(message) if level <= @opts.level
