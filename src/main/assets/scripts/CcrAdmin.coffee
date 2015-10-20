@@ -6,6 +6,7 @@ window.CcrAdmin = class CcrAdmin
     @eventManager = new EventManager(@logger)
     @eventMapper = new EventMapper(@logger, @eventManager)
     @ccrClient = new CentralConfigurationRepositoryClient(@logger, @eventManager, { ccrService: { protocol: 'http', host: 'localhost', port: 35487 } })
+    @ccrClientEventWatcher = new CcrClientEventWatcher(@logger, @eventManager, @ccrClient)
     uiTemplates = new UiTemplates()
     uiTemplates.init()
     @environmentsList = new EntityList(
@@ -13,6 +14,7 @@ window.CcrAdmin = class CcrAdmin
       @eventManager,
       {
         populateEvent: Strings.Events.ServiceQueries.EnvironmentQuerySuccess,
+        clearEvent: Strings.Events.UiEvents.ClearEnvironments,
         ele: $('#environmentsList'),
         template: uiTemplates.listItemTemplate
       })
@@ -21,6 +23,7 @@ window.CcrAdmin = class CcrAdmin
       @eventManager,
       {
         populateEvent: Strings.Events.ServiceQueries.ApplicationQuerySuccess,
+        clearEvent: Strings.Events.UiEvents.ClearApplications,
         ele: $('#applicationsList'),
         template: uiTemplates.listItemTemplate
       })
@@ -29,6 +32,7 @@ window.CcrAdmin = class CcrAdmin
       @eventManager,
       {
         populateEvent: Strings.Events.ServiceQueries.ScopeQuerySuccess,
+        clearEvent: Strings.Events.UiEvents.ClearScopes,
         ele: $('#scopesList'),
         template: uiTemplates.listItemTemplate
       })
@@ -37,6 +41,7 @@ window.CcrAdmin = class CcrAdmin
       @eventManager,
       {
         populateEvent: Strings.Events.ServiceQueries.SettingQuerySuccess,
+        clearEvent: Strings.Events.UiEvents.ClearSettings,
         ele: $('#settingsList'),
         template: uiTemplates.listItemTemplate
       })
@@ -51,9 +56,14 @@ window.CcrAdmin = class CcrAdmin
     @logger.debug("CcrAdmin::init #{JSON.stringify(@ccrClient.opts)}")
     window.ccrAdmin.Logger          = @logger
     window.ccrAdmin.EventManager    = @eventManager
+
     @environmentsList.init()
     @applicationsList.init()
     @scopesList.init()
     @settingsList.init()
 
     @registerEventMaps()
+
+    @ccrClientEventWatcher.init()
+
+    @eventManager.dispatchEvent(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, {})

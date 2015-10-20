@@ -6,7 +6,7 @@
 
     <!-- Mustache Templates -->
     <script type="x-tmpl-mustache" id="listItem-mst">
-        <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}' })" class="list-group-item list-item-group-normal">{{name}}</a>
+        <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}', env: '{{env}}', app: '{{app}}', scp: '{{scp}}', stg: '{{stg}}' })" class="list-group-item list-item-group-normal">{{name}}</a>
     </script>
 
     <script type="x-tmpl-mustache" id="valuePanel-mst">
@@ -40,6 +40,7 @@
     <script type="application/javascript" src="assets/scripts/EventMapper.js"></script>
     <script type="application/javascript" src="assets/scripts/ExpiringCache.js"></script>
     <script type="application/javascript" src="assets/scripts/CentralConfigurationRepositoryClient.js"></script>
+    <script type="application/javascript" src="assets/scripts/CcrClientEventWatcher.js"></script>
     <script type="application/javascript" src="assets/scripts/EntityList.js"></script>
     <script type="application/javascript" src="assets/scripts/CcrAdmin.js"></script>
     <title>C-C-R Admin</title>

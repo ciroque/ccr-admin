@@ -42,7 +42,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
     ).execute()
 
   retrieveScopes: (environment, application) ->
-    @logger.debug('CentralConfigurationRepositoryClient::retrieveScopes')
+    @logger.debug("CentralConfigurationRepositoryClient::retrieveScopes('#{environment}', '#{application}')")
     @buildWebQuery(
       "#{environment}/#{application}",
       Strings.Events.ServiceQueries.ScopeQuerySuccess,

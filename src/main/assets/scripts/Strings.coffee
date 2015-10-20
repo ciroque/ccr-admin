@@ -18,11 +18,15 @@ window.Strings = class @Strings
       @ApplicationSelected        = 'UIAPPSEL'
       @ScopeSelected              = 'UISCPSEL'
       @SettingSelected            = 'UISTGSEL'
+      @ClearEnvironments          = 'UICLRENV'
+      @ClearApplications          = 'UICLRAPP'
+      @ClearScopes                = 'UICLRSCP'
+      @ClearSettings              = 'UICLRSTG'
 
     class @ServiceCallTriggers
       @InitiateEnvironmentQuery   = 'ENVQRYI'
       @InitiateApplicationQuery   = 'APPQRYI'
-      @InitiateSCopeQuery         = 'SCPQRYI'
+      @InitiateScopeQuery         = 'SCPQRYI'
       @InitiateSettingQuery       = 'STGQRYI'
       @InitiateConfigurationQuery = 'CFGQRYI'
 
