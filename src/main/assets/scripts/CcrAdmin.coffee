@@ -4,6 +4,7 @@ window.CcrAdmin = class CcrAdmin
   constructor: () ->
     @logger = new Logger({level: LogLevel.ALL})
     @eventManager = new EventManager(@logger)
+    @eventMapper = new EventMapper(@logger, @eventManager)
     @ccrClient = new CentralConfigurationRepositoryClient(@logger, @eventManager, { ccrService: { protocol: 'http', host: 'localhost', port: 35487 } })
     uiTemplates = new UiTemplates()
     uiTemplates.init()
@@ -40,6 +41,11 @@ window.CcrAdmin = class CcrAdmin
         template: uiTemplates.listItemTemplate
       })
 
+  registerEventMaps: () ->
+    @eventMapper.mapEvent(Strings.Events.UiEvents.EnvironmentSelected, Strings.Events.ServiceCallTriggers.InitiateApplicationQuery)
+    @eventMapper.mapEvent(Strings.Events.UiEvents.ApplicationSelected, Strings.Events.ServiceCallTriggers.InitiateScopeQuery)
+    @eventMapper.mapEvent(Strings.Events.UiEvents.ScopeSelected, Strings.Events.ServiceCallTriggers.InitiateSettingQuery)
+    @eventMapper.mapEvent(Strings.Events.UiEvents.SettingSelected, Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery)
 
   init: () ->
     @logger.debug("CcrAdmin::init #{JSON.stringify(@ccrClient.opts)}")
@@ -50,11 +56,4 @@ window.CcrAdmin = class CcrAdmin
     @scopesList.init()
     @settingsList.init()
 
-    @ccrClient.retrieveEnvironments()
-
-      ## TODO : Remove these as the eventing goes into place.
-    @ccrClient.retrieveApplications('*')
-    @ccrClient.retrieveScopes('*', '*')
-    @ccrClient.retrieveSettings('*', '*', '*')
-#    @ccrClient.retrieveConfigurations('PROD', 'CCR-ADMIN', 'LOGGING', 'LOGFILENAME')
-
+    @registerEventMaps()

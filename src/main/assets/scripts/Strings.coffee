@@ -12,11 +12,19 @@ window.Strings = class @Strings
       @SettingQueryFailure        = 'STGQRYF'
       @ConfigurationQuerySuccess  = 'CFGQRYS'
       @ConfigurationQueryFailure  = 'CFGQRYF'
+
     class @UiEvents
       @EnvironmentSelected        = 'UIENVSEL'
       @ApplicationSelected        = 'UIAPPSEL'
       @ScopeSelected              = 'UISCPSEL'
       @SettingSelected            = 'UISTGSEL'
+
+    class @ServiceCallTriggers
+      @InitiateEnvironmentQuery   = 'ENVQRYI'
+      @InitiateApplicationQuery   = 'APPQRYI'
+      @InitiateSCopeQuery         = 'SCPQRYI'
+      @InitiateSettingQuery       = 'STGQRYI'
+      @InitiateConfigurationQuery = 'CFGQRYI'
 
   class @ServiceLocation
     @CcrProtocol = 'http'
