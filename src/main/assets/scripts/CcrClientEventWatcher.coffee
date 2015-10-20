@@ -10,21 +10,24 @@ window.CcrClientEventWatcher = class CcrClientEventWatcher
     ccrClient = @ccrClient
     eventManager = @eventManager
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, () ->
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearEnvironments, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearApplications, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearScopes, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearSettings, {})
+      eventManager.dispatchEvents(
+        Strings.Events.UiEvents.ClearEnvironments,
+        Strings.Events.UiEvents.ClearApplications,
+        Strings.Events.UiEvents.ClearScopes,
+        Strings.Events.UiEvents.ClearSettings)
       ccrClient.retrieveEnvironments()
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateApplicationQuery, (args) ->
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearApplications, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearScopes, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearSettings, {})
+      eventManager.dispatchEvents(
+        Strings.Events.UiEvents.ClearApplications,
+        Strings.Events.UiEvents.ClearScopes,
+        Strings.Events.UiEvents.ClearSettings)
       ccrClient.retrieveApplications(args.value)
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateScopeQuery, (args) ->
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearScopes, {})
-      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearSettings, {})
+      eventManager.dispatchEvents(
+        Strings.Events.UiEvents.ClearScopes,
+        Strings.Events.UiEvents.ClearSettings)
       ccrClient.retrieveScopes(args.env, args.value)
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateSettingQuery, (args) ->
