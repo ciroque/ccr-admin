@@ -17,27 +17,27 @@ describe "CentralConfigurationRepositoryClient", ->
   APPLICATIONS = ['WEB', 'DESKTOP', 'SERVICE']
   SCOPES = ['LOGGING', 'BL']
   SETTINGS = ['LOGFILENAME', 'LOGLEVEL', 'ROLLINTERVAL']
-  CONFIGURATIONS = [
-      {
-        key: {
-          environment: ENVIRONMENTS[0],
-          application: APPLICATIONS[0],
-          scope: SCOPES[0],
-          setting: SETTINGS[0],
-          sourceId: "BOOM"
-        },
-        value: 'YAYHOO',
-        temporality: {
-          effectiveAt: YESTERDAY,
-          expiresAt: TOMORROW,
-          ttl: 1
-        }
+  CONFIGURATIONS = {
+    configuration: [{
+      key: {
+        environment: ENVIRONMENTS[0],
+        application: APPLICATIONS[0],
+        scope: SCOPES[0],
+        setting: SETTINGS[0],
+        sourceId: "BOOM"
+      },
+      value: 'YAYHOO',
+      temporality: {
+        effectiveAt: YESTERDAY,
+        expiresAt: TOMORROW,
+        ttl: 1
       }
-  ]
+    }]
+  }
 
   beforeEach(() ->
     @logSnk = new TestLoggingSink()
-    @logger = new Logger({ level: LogLevel.ALL, sink: @logSnk })
+    @logger = new Logger({level: LogLevel.ALL, sink: @logSnk})
     @evtMgr = new EventManager(@logger)
     @client = new CentralConfigurationRepositoryClient(@logger, @evtMgr)
   )
@@ -56,8 +56,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'calls the provided success handler with the appropriate arguments', ->
       successCalled = false
       errorCalled = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: ENVIRONMENTS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = (result) -> expect(result).toBe ENVIRONMENTS; successCalled = true
       errorHandler = (error) -> fail("error handler should not have been called!"); errorCalled = true
       webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
@@ -70,8 +70,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'dispatches the success event via the event manager', ->
       successEventFired = false
       failedEventFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: ENVIRONMENTS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; successEventFired = true
       @evtMgr.registerHandler(EVT_SUCCESS, successEventHandler)
       failedEventHandler = () -> failedEventFired = true
@@ -84,8 +84,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'calls the provided error handler with the appropriate arguments', ->
       successCalled = false
       errorCalled = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = () -> fail("success handler should not have been called!"); successCalled = true
       errorHandler = (error) -> expect(error).toBe ERROR_MSG; errorCalled = true
       webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
@@ -100,8 +100,8 @@ describe "CentralConfigurationRepositoryClient", ->
       successEventFired = false
       failedEventFired = false
 
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successEventHandler = (args) -> successEventFired = true; expect(args).toBe ENVIRONMENTS
       @evtMgr.registerHandler(EVT_SUCCESS, successEventHandler)
       failedEventHandler = (args) -> failedEventFired = true; expect(args).toBe ERROR_MSG
@@ -112,12 +112,11 @@ describe "CentralConfigurationRepositoryClient", ->
       expect(failedEventFired).toBe true
 
   describe 'retrieveEnvironments', ->
-
     it 'handles a successful call to retrieve environments', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: ENVIRONMENTS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -134,8 +133,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles an unsuccessful call to retrieve environments', ->
       environmentQuerySuccessFired = false
       environmentQueryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; environmentQuerySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; environmentQueryFailureFired = true
@@ -153,8 +152,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles a successful call to retrieve applications', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: ENVIRONMENTS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: ENVIRONMENTS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -171,8 +170,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles an unsuccessful call to retrieve applications', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe ENVIRONMENTS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -190,8 +189,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles a successful call to retrieve scopes', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: SCOPES })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: SCOPES})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe SCOPES; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -208,8 +207,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles an unsuccessful call to retrieve scopes', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe SCOPES; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -227,8 +226,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles a successful call to retrieve settings', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: SETTINGS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: SETTINGS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe SETTINGS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -245,8 +244,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles an unsuccessful call to retrieve settings', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe SETTINGS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -264,8 +263,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles a successful call to retrieve configurations', ->
       querySuccessFired = false
       queryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: CONFIGURATIONS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: CONFIGURATIONS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe CONFIGURATIONS; querySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
@@ -282,8 +281,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'handles an unsuccessful call to retrieve configurations', ->
       scopeQuerySuccessFired = false
       scopeQueryFailureFired = false
-      mockAjaxProvider = new MockAjaxProvider(@logger, { callError: ERROR_MSG })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {callError: ERROR_MSG})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args).toBe CONFIGURATIONS; scopeQuerySuccessFired = true
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; scopeQueryFailureFired = true
@@ -300,8 +299,8 @@ describe "CentralConfigurationRepositoryClient", ->
     it 'uses the cache for settings', ->
       querySuccessFired = 0
       queryFailureFired = 0
-      mockAjaxProvider = new MockAjaxProvider(@logger, { results: CONFIGURATIONS })
-      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+      mockAjaxProvider = new MockAjaxProvider(@logger, {results: CONFIGURATIONS})
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
 
       successEventHandler = (args) -> expect(args[0]).toBe CONFIGURATIONS[0]; querySuccessFired++
       failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired++

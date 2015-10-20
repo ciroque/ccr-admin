@@ -69,7 +69,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
 
     cache = @cache
     successHandler = (result) ->
-      cfg = result[0]
+      cfg = result.configuration[0]
       cache.put(buildQueryPath(), cfg, cfg.temporality.ttl)
 
     webQuery = @buildWebQuery(
@@ -84,7 +84,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
 
     if cfg
       @logger.debug("CentralConfigurationRepositoryClient::retrieveConfigurations #{path} found in cache")
-      webQuery.success([cfg])
+      webQuery.success({ configuration: [ cfg ] })
 
     else
       webQuery.execute()
