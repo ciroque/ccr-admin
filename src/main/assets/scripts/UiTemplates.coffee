@@ -8,4 +8,3 @@ window.UiTemplates = class UiTemplates
   init: () ->
     Mustache.parse(@listItemTemplate)
     Mustache.parse(@valuePanelTemplate)
-

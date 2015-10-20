@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>Jasmine Spec Runner</title>
     <link rel="stylesheet" type="text/css" href="../../../bower_components/jasmine-core/lib/jasmine-core/jasmine.css">
+
+    <script type="x-tmpl-mustache" id="listItem-mst">
+        <a href="#" class="list-group-item list-group-item-success">{{name}}</a>
+    </script>
+
+    <script type="application/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
     <script src="../../../bower_components/jquery/dist/jquery.js"></script>
     <script src="../../../bower_components/jasmine-core/lib/jasmine-core/jasmine.js"></script>
     <script src="../../../bower_components/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
@@ -15,15 +22,19 @@
     <script src="../../main/assets/scripts/Logger.js"></script>
     <script src="../../main/assets/scripts/EventManager.js"></script>
     <script src="../../main/assets/scripts/ExpiringCache.js"></script>
+    <script src="../../main/assets/scripts/EntityList.js"></script>
+    <script src="../../main/assets/scripts/UiTemplates.js"></script>
     <script src="../../main/assets/scripts/CentralConfigurationRepositoryClient.js"></script>
 
     <!-- include spec files here... -->
     <script src="./Utils.js"></script>
     <script src="./MockAjaxProvider.js"></script>
+    <script src="./MockElement.js"></script>
     <script src="./TestLoggingSink.js"></script>
     <script src="./LoggerSpec.js"></script>
     <script src="./EventManagerSpec.js"></script>
     <script src="./ExpiringCacheSpec.js"></script>
+    <script src="./EntityListSpec.js"></script>
     <script src="./CentralConfigurationRepositoryClientSpec.js"></script>
 </head>
 <body>
