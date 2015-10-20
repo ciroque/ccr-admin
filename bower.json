@@ -25,6 +25,7 @@
   "dependencies": {
     "bootstrap-sass-official": "~3.3.5",
     "jasmine-core": "~2.3.4",
-    "mustache.js": "mustache#~2.2.0"
+    "mustache.js": "~2.2.0",
+    "jquery": "~2.1.4"
   }
 }
