@@ -8,7 +8,6 @@
     <script type="x-tmpl-mustache" id="listItem-mst">
         <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}', env: '{{env}}', app: '{{app}}', scp: '{{scp}}', stg: '{{stg}}' })" class="list-group-item list-item-group-normal">{{name}}</a>
     </script>
-
     <script type="x-tmpl-mustache" id="valuePanel-mst">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -17,16 +16,54 @@
             <div class="panel-body">
                 <div class="input-group lower-small-margin">
                     <span class="input-group-addon">Value</span>
-                    <div class="form-control">{{value}}</div>
+
+                    <div class="form-control">MyLogFile.log</div>
                 </div>
                 <div class="input-group lower-small-margin">
                     <span class="input-group-addon">Source ID</span>
-                    <div class="form-control">{{sourceId}}</div>
+
+                    <div class="form-control"></div>
                 </div>
             </div>
         </div>
-    </script>
 
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Temporality</h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group lower-small-margin">
+                    <span class="input-group-addon">Effective At</span>
+
+                    <div class="form-control">2015-10-10 00:00:00</div>
+                </div>
+                <div class="input-group lower-small-margin">
+                    <span class="input-group-addon">Expires At</span>
+
+                    <div class="form-control">2015-11-01 00:00:00</div>
+                </div>
+                <div class="input-group lower-small-margin">
+                    <span class="input-group-addon">Time to Live</span>
+
+                    <div class="form-control">1440</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">History</h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon">History</span>
+
+                    <div class="form-control">MyLogFile.log</div>
+                </div>
+            </div>
+        </div>
+
+    </script>
 
 
     <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -64,60 +101,7 @@
             <div class="list-group" id="settingsList"></div>
         </div>
         <div class="col-lg-4">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Value</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon">Value</span>
-
-                        <div class="form-control">MyLogFile.log</div>
-                    </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon">Source ID</span>
-
-                        <div class="form-control"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Temporality</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon">Effective At</span>
-
-                        <div class="form-control">2015-10-10 00:00:00</div>
-                    </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon">Expires At</span>
-
-                        <div class="form-control">2015-11-01 00:00:00</div>
-                    </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon">Time to Live</span>
-
-                        <div class="form-control">1440</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">History</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group">
-                        <span class="input-group-addon">History</span>
-
-                        <div class="form-control">MyLogFile.log</div>
-                    </div>
-                </div>
-            </div>
-
+            <div class="list-group" id="configurationList"></div>
         </div>
     </div>
 </div>
