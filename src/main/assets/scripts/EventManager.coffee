@@ -17,3 +17,6 @@ window.EventManager = class EventManager
     handlers = if @handlerMap[name] then @handlerMap[name] else []
     handler args for handler in handlers when handlers?
     @
+
+  dispatchEvents: (events...) ->
+    @dispatchEvent(name, {}) for name in events if events?

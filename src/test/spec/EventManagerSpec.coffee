@@ -72,3 +72,33 @@ describe 'EventManager', ->
     @eventManager.registerHandler(EVENT_ONE, handler)
     @eventManager.dispatchEvent(EVENT_ONE, expectedArgs)
     expect(actualArgs).toBe expectedArgs
+
+  it 'supports batch event dispatching', ->
+    eventOne = 'ONE'
+    eventTwo = 'TWO'
+    eventThree = 'THREE'
+    eventOneCalled = 0
+    eventTwoCalled = 0
+    eventThreeCalled = 0
+    handlerOne = () -> eventOneCalled++
+    handlerTwo = () -> eventTwoCalled++
+    handlerThree = () -> eventThreeCalled++
+
+    @eventManager.registerHandler(eventOne, handlerOne)
+    @eventManager.registerHandler(eventTwo, handlerTwo)
+    @eventManager.registerHandler(eventThree, handlerThree)
+
+    @eventManager.dispatchEvents(eventOne, eventTwo)
+    expect(eventOneCalled).toBe 1
+    expect(eventTwoCalled).toBe 1
+    expect(eventThreeCalled).toBe 0
+
+    @eventManager.dispatchEvents(eventThree, eventThree)
+    expect(eventOneCalled).toBe 1
+    expect(eventTwoCalled).toBe 1
+    expect(eventThreeCalled).toBe 2
+
+    @eventManager.dispatchEvent(eventOne, {})
+    expect(eventOneCalled).toBe 2
+    expect(eventTwoCalled).toBe 1
+    expect(eventThreeCalled).toBe 2
