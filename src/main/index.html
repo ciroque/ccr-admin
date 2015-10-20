@@ -6,8 +6,9 @@
 
     <!-- Mustache Templates -->
     <script type="x-tmpl-mustache" id="listItem-mst">
-        <a href="#" class="list-group-item list-item-group-normal">{{name}}</a>
+        <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}' })" class="list-group-item list-item-group-normal">{{name}}</a>
     </script>
+    
     <script type="x-tmpl-mustache" id="valuePanel-mst">
         <div class="panel panel-info">
             <div class="panel-heading">

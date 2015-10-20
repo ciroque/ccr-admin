@@ -18,13 +18,13 @@ window.EntityList = class EntityList
 
       extractList = (items) ->
         if items.environments
-          {name: item} for item in items.environments
+          {name: item, evt: Strings.Events.UiEvents.EnvironmentSelected } for item in items.environments
         else if items.applications
-          {name: item} for item in items.applications
+          {name: item, evt: Strings.Events.UiEvents.ApplicationSelected } for item in items.applications
         else if items.scopes
-          {name: item} for item in items.scopes
+          {name: item, evt: Strings.Events.UiEvents.ScopeSelected } for item in items.scopes
         else if items.settings
-          {name: item} for item in items.settings
+          {name: item, evt: Strings.Events.UiEvents.SettingSelected } for item in items.settings
         else
           []
 

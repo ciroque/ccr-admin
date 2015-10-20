@@ -2,7 +2,7 @@
 
 window.CcrAdmin = class CcrAdmin
   constructor: () ->
-    @logger = new Logger({level: LogLevel.NONE})
+    @logger = new Logger({level: LogLevel.ALL})
     @eventManager = new EventManager(@logger)
     @ccrClient = new CentralConfigurationRepositoryClient(@logger, @eventManager, { ccrService: { protocol: 'http', host: 'localhost', port: 35487 } })
     uiTemplates = new UiTemplates()
@@ -43,6 +43,8 @@ window.CcrAdmin = class CcrAdmin
 
   init: () ->
     @logger.debug("CcrAdmin::init #{JSON.stringify(@ccrClient.opts)}")
+    window.ccrAdmin.Logger          = @logger
+    window.ccrAdmin.EventManager    = @eventManager
     @environmentsList.init()
     @applicationsList.init()
     @scopesList.init()
