@@ -1,24 +1,30 @@
 "use strict"
 
 window.Seahawks = class Seahawks
+  ENVIRONMENT = 'NFL'
+  APPLICATION = 'Seahawks'
+  SCOPE = 'Offense'
+  OFFENSIVE_POSITIONS = [
+    'positionQuarterback',
+    'positionCenter',
+    'positionRightGuard',
+    'positionLeftGuard',
+    'positionRightTackle',
+    'positionLeftTackle',
+    'positionWideReceiver1',
+    'positionWideReceiver2',
+    'positionTightEnd1',
+    'positionRunningBack',
+    'positionHalfBack'
+  ]
+
+  @OFFENSIVE_POSITIONS = OFFENSIVE_POSITIONS
+  @ENVIRONMENT = ENVIRONMENT
+  @APPLICATION = APPLICATION
+  @SCOPE = SCOPE
 
   constructor: () ->
-    @ENVIRONMENT = 'NFL'
-    @APPLICATION = 'Seahawks'
-    @SCOPE = 'Offense'
-    @POSITIONS = [
-      'positionQuarterback',
-      'positionCenter',
-      'positionRightGuard',
-      'positionLeftGuard',
-      'positionRightTackle',
-      'positionLeftTackle',
-      'positionWideReceiver1',
-      'positionWideReceiver2',
-      'positionTightEnd1',
-      'positionRunningBack',
-      'positionHalfBack'
-    ]
+    @POSITIONS = OFFENSIVE_POSITIONS
 
   generateConfigurations: () ->
     TODAY = new Date()
@@ -59,7 +65,7 @@ window.Seahawks = class Seahawks
       ttl: 2
     }
 
-    oneDayTemporalization = {effectiveAt: toIsoDateString(TODAY), expiresAt: toIsoDateString(TOMORROW), ttl: 360}
+    oneDayTemporalization = {effectiveAt: toIsoDateString(TODAY), expiresAt: toIsoDateString(TOMORROW), ttl: 20}
 
     players = [
       {position: @POSITIONS[0], name: 'Russell Wilson', temporalization: oneDayTemporalization},
@@ -80,9 +86,9 @@ window.Seahawks = class Seahawks
     {
       _id: uuid(),
       key: {
-        environment: @ENVIRONMENT,
-        application: @APPLICATION,
-        scope: @SCOPE,
+        environment: ENVIRONMENT,
+        application: APPLICATION,
+        scope: SCOPE,
         setting: player.position
       },
       value: player.name,

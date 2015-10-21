@@ -12,7 +12,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
     logger: @logger,
     eventManager: @eventManager,
     success: (result) ->
-      result.cacheHit = false
+      result.cacheHit = false if !result.cacheHit
       success(result) if success?
       @eventManager.dispatchEvent(successEvent, result)
       @logger.debug("ServiceClient::AjaxCall to #{url} succeeded")

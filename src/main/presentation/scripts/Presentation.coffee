@@ -10,26 +10,32 @@ window.Presentation = class Presentation
   init: () ->
     @logger.debug('Presentation::init')
     Mustache.parse(@positionTemplate)
+    window.positionTemplate = @positionTemplate
+    @registerEventHandlers()
 
   registerEventHandlers: () ->
     setPosition = @setPosition
+    logger = @logger
     @eventManager.registerHandler(
       Strings.Events.ServiceQueries.ConfigurationQuerySuccess,
       (cfgs) ->
-        cfg = cfgs[0]
+        cfg = cfgs.configuration[0]
         position = cfg.key.setting
-        data = { name: cfg.value, ttl: cfg.temporality.ttl, cacheHit: false }
-        @logger.debug("HANDLING: #{position} :: #{JSON.stringify(data)}")
+        data = { name: cfg.value, ttl: cfg.temporality.ttl, cacheHit: cfgs.cacheHit, position: position.substr(8) }
+        logger.debug(JSON.stringify(cfgs))
         setPosition(position, data)
     )
 
   setPosition: (elId, data) ->
-    @logger.debug("Presentation::setPosition")
-    rendered = Mustache.render(@positionTemplate, data)
+    rendered = Mustache.render(window.positionTemplate, data)
     $("##{elId}").html(rendered)
 
   loadPositions: () ->
-    @ccrClient.retrieveConfigurations('NFL', 'Seahawks', 'Offense', position) for position in Seahawks.POSITIONS
+    @ccrClient.retrieveConfigurations(
+      Seahawks.ENVIRONMENT,
+      Seahawks.APPLICATION,
+      Seahawks.SCOPE,
+      position) for position in Seahawks.OFFENSIVE_POSITIONS
 
   run: () ->
     @init()

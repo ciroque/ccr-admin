@@ -40,6 +40,9 @@
 </head>
 <body>
 <div class="container">
+    <div class="row btn-toolbar">
+        <div class="btn btn-success" onclick="window.Presentation.loadPositions()">Reload</div>
+    </div>
     <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-2" id="positionLeftTackle"></div>
@@ -67,7 +70,8 @@
     </div>
 </div>
 <script type="application/javascript">
-    new Presentation().run();
+    window.Presentation = new Presentation();
+    window.Presentation.run();
 </script>
 </body>
 </html>
