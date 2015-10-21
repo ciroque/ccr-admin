@@ -6,3 +6,20 @@
 .lower-small-margin {
   margin-bottom: $small-margin-pixels;
 }
+
+.lower-medium-margin {
+  margin-bottom: $medium-margin-pixels;
+}
+
+.lower-large-margin {
+  margin-bottom: $large-margin-pixels;
+}
+
+.ccr-label {
+  font-family: "Courier New";
+  color: $brand-primary;
+}
+
+.ccr-list-item {
+  font-size: smaller;
+}
