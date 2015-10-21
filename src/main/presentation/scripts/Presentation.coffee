@@ -3,6 +3,7 @@
 window.Presentation = class Presentation
   constructor: () ->
     @positionTemplate = $('#nfl-position-mst').html()
+    @cacheStatsTemplate = $('#cache-stats-mst').html()
     @logger = new window.Logger({level: LogLevel.ALL})
     @eventManager = new window.EventManager(@logger)
     @ccrClient = new window.CentralConfigurationRepositoryClient(@logger, @eventManager)
@@ -10,6 +11,7 @@ window.Presentation = class Presentation
   init: () ->
     @logger.debug('Presentation::init')
     Mustache.parse(@positionTemplate)
+    Mustache.parse(@cacheStatsTemplate)
     window.positionTemplate = @positionTemplate
     @registerEventHandlers()
 
@@ -43,6 +45,12 @@ window.Presentation = class Presentation
       Seahawks.APPLICATION,
       Seahawks.SCOPE,
       position) for position in Seahawks.OFFENSIVE_POSITIONS
+    @updateCacheStats()
+
+  updateCacheStats: () ->
+    stats = @ccrClient.cache.getStats()
+    $('#cacheStats').html(Mustache.render(@cacheStatsTemplate, stats))
+#    console.log("CacheStats :: #{JSON.stringify(stats)}")
 
   run: () ->
     @init()

@@ -26,6 +26,29 @@
                 </div>
             </div>
     </script>
+    <script type="x-tmpl-mustache" id="cache-stats-mst">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Cache Stats</div>
+                <div class="panel-body">
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Attempts</span>
+                        <div class="form-control">{{cacheAttempts}}</div>
+                    </div>
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Hits</span>
+                        <div class="form-control">{{cacheHits}}</div>
+                    </div>
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Misses</span>
+                        <div class="form-control">{{cacheMisses}}</div>
+                    </div>
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Expiries</span>
+                        <div class="form-control">{{cacheExpiries}}</div>
+                    </div>
+                </div>
+            </div>
+    </script>
 
     <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
@@ -44,8 +67,11 @@
 </head>
 <body>
 <div class="container">
+    <div class="page-header">
+        <h4>Seahawks Offensive Line Configuration</h4>
+    </div>
     <div class="row btn-toolbar">
-        <div class="btn btn-success" onclick="window.Presentation.loadPositions()">Reload</div>
+        <div class="btn btn-success btn-primary-outline" onclick="window.Presentation.loadPositions()">Reload</div>
     </div>
     <div class="row">
         <div class="col-lg-1"></div>
@@ -68,7 +94,8 @@
     <div class="row">
     </div>
     <div class="row">
-        <div class="col-lg-5"></div>
+        <div class="col-lg-2" id="cacheStats"></div>
+        <div class="col-lg-3"></div>
         <div class="col-lg-2" id="positionHalfBack"></div>
         <div class="col-lg-5"></div>
     </div>
