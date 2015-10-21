@@ -9,7 +9,7 @@ describe "CentralConfigurationRepositoryClient", ->
   TODAY = new Date()
   YESTERDAY = new Date().setDate(TODAY.getDate() - 1)
   TOMORROW = new Date().setDate(TODAY.getDate() + 1)
-  URL = 'http://localhost:80/ccr/settings/'
+  URL = 'http://localhost:35487/ccr/settings/'
   EVT_SUCCESS = 'TestSuccessfulEvent'
   EVT_FAILURE = 'TestFailedEvent'
   ERROR_MSG = "THIS IS A FAILURE MESSAGE"
