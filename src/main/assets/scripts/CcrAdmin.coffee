@@ -45,6 +45,16 @@ window.CcrAdmin = class CcrAdmin
         ele: $('#settingsList'),
         template: uiTemplates.listItemTemplate
       })
+    @configurationsPanel = new ValuesPanel(
+      @logger,
+      @eventManager,
+      {
+        populateEvent: Strings.Events.ServiceQueries.ConfigurationQuerySuccess,
+        clearEvent: Strings.Events.UiEvents.ClearConfiguration,
+        ele: $('#configurationList'),
+        renderTemplate: uiTemplates.valuePanelTemplate
+      }
+    )
 
   registerEventMaps: () ->
     @eventMapper.mapEvent(Strings.Events.UiEvents.EnvironmentSelected, Strings.Events.ServiceCallTriggers.InitiateApplicationQuery)
@@ -61,6 +71,7 @@ window.CcrAdmin = class CcrAdmin
     @applicationsList.init()
     @scopesList.init()
     @settingsList.init()
+    @configurationsPanel.init()
 
     @registerEventMaps()
 
@@ -70,5 +81,7 @@ window.CcrAdmin = class CcrAdmin
       Strings.Events.UiEvents.ClearEnvironments,
       Strings.Events.UiEvents.ClearApplications,
       Strings.Events.UiEvents.ClearScopes,
-      Strings.Events.UiEvents.ClearSettings)
+      Strings.Events.UiEvents.ClearSettings,
+      Strings.Events.UiEvents.ClearConfiguration
+    )
     @eventManager.dispatchEvent(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, {})

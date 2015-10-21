@@ -22,6 +22,7 @@ window.Strings = class @Strings
       @ClearApplications          = 'UICLRAPP'
       @ClearScopes                = 'UICLRSCP'
       @ClearSettings              = 'UICLRSTG'
+      @ClearConfiguration         = 'UICLRCFG'
 
     class @ServiceCallTriggers
       @InitiateEnvironmentQuery   = 'ENVQRYI'
