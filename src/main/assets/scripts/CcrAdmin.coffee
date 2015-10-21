@@ -63,7 +63,7 @@ window.CcrAdmin = class CcrAdmin
     @eventMapper.mapEvent(Strings.Events.UiEvents.SettingSelected, Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery)
 
   init: () ->
-    @logger.debug("CcrAdmin::init #{JSON.stringify(@ccrClient.opts)}")
+    @logger.debug("CcrAdmin::init")
     window.ccrAdmin.Logger          = @logger
     window.ccrAdmin.EventManager    = @eventManager
 

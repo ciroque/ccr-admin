@@ -41,5 +41,6 @@ window.CcrClientEventWatcher = class CcrClientEventWatcher
       ccrClient.retrieveSettings(args.env, args.app, args.value)
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery, (args) ->
+      eventManager.dispatchEvent(Strings.Events.UiEvents.ClearConfiguration)
       ccrClient.retrieveConfigurations(args.env, args.app, args.scp, args.value)
     )

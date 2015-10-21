@@ -5,7 +5,7 @@ window.ValuesPanel = class ValuesPanel
     @opts = AppTools.merge({renderTemplate: null, clearEvent: null, populateEvent: null, ele: null}, opts)
 
   init: () ->
-    @logger.debug("ValuesPanel::init #{JSON.stringify(@opts)}")
+    @logger.debug("ValuesPanel::init")
     @registerHandlers()
 
   registerHandlers: () ->
