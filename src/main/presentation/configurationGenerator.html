@@ -2,19 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="../assets/styles/main.css">
     <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="application/javascript" src="assets/scripts/ConfigurationGenerator.js"></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
+    <script type="application/javascript" src="scripts/Seahawks.js"></script>
+    <script type="application/javascript" src="scripts/ConfigurationGenerator.js"></script>
+
     <script type="x-tmpl-mustache" id="config-mst">
-        <a href="#" class="list-group-item list-item-group-normal ccr-small-text">{{result}} ==> {{data}}</a>
+        <div class="list-group-item list-item-group-normal ccr-small-text">{{result}} ==> {{data}}</div>
     </script>
 
     <title>CCR Configuration Generator</title>
 </head>
     <body>
+    <div class="jumbotron">
+        Central Configuration Repository - Configuration Generator
+    </div>
         <div class="row btn-toolbar">
             <div class="btn btn-success" onclick="handleGenerateClicked()">Generate</div>
+            <div class="btn btn-success" onclick="generateSeahawksOffense()">Generate Seahawks</div>
         </div>
         <div class="row">
             <div class="col-lg-12" id="generatedConfigurations">
@@ -25,16 +31,27 @@
         <script type="application/javascript">
             var template = $('#config-mst').html();
             Mustache.parse(template);
+            var generator = new ConfigurationGenerator();
             function handleGenerateClicked() {
-                var generator = new ConfigurationGenerator();
+                var el = $('#generatedConfigurations');
+                el.empty();
                 var configurations = generator.generate();
                 var flattened = generator.flattened(configurations);
-                console.log('flattened.length = ' + flattened.length);
+//                el.html(JSON.stringify(flattened));
                 generator.postToService(flattened, handlePostResult);
             }
 
             function handlePostResult(args) {
                 $('#generatedConfigurations').append(Mustache.render(template, args))
+            }
+
+            function generateSeahawksOffense() {
+                var el = $('#generatedConfigurations');
+                el.empty();
+                seahawks = new window.Seahawks();
+                configurations = seahawks.generateConfigurations();
+//                el.html(JSON.stringify(configurations));
+                generator.postToService(configurations, handlePostResult);
             }
         </script>
     </body>

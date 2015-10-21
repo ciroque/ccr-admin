@@ -29,20 +29,7 @@ window.Presentation = class Presentation
     $("##{elId}").html(rendered)
 
   loadPositions: () ->
-    POSITIONS = [
-      'positionQuarterback',
-      'positionCenter',
-      'positionRightGuard',
-      'positionLeftGuard',
-      'positionRightTackle',
-      'positionLeftTackle',
-      'positionWideReceiver1',
-      'positionWideReceiver2',
-      'positionTightEnd1',
-      'positionTightEnd2',
-      'positionHalfBack'
-    ]
-    @ccrClient.retrieveConfigurations('NFL', 'Seahawks', 'Offense', position) for position in POSITIONS
+    @ccrClient.retrieveConfigurations('NFL', 'Seahawks', 'Offense', position) for position in Seahawks.POSITIONS
 
   run: () ->
     @init()
