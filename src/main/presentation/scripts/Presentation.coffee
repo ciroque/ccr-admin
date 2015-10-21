@@ -21,7 +21,14 @@ window.Presentation = class Presentation
       (cfgs) ->
         cfg = cfgs.configuration[0]
         position = cfg.key.setting
-        data = { name: cfg.value, ttl: cfg.temporality.ttl, cacheHit: cfgs.cacheHit, position: position.substr(8) }
+        secondsUntilExpiration = (new Date(cfg.temporality.expiresAt).getTime() - new Date().getTime()) / 1000
+        data = {
+          name: cfg.value,
+          ttl: cfg.temporality.ttl,
+          cacheHit: cfgs.cacheHit,
+          position: position.substr(8),
+          willSub: if secondsUntilExpiration > 200 then 0 else parseInt(secondsUntilExpiration)
+        }
         logger.debug(JSON.stringify(cfgs))
         setPosition(position, data)
     )
