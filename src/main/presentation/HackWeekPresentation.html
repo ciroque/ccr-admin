@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/presentation.css">
+
+    <script type="x-tmpl-mustache" id="nfl-position-mst">
+            <div class="panel panel-primary">
+                <div class="panel-heading">{{position}}</div>
+                <div class="panel-body">
+                    <div class="input-group lower-small-margin">
+                        <div class="form-control" style="font-weight:bold;">{{name}}</div>
+                    </div>
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Cache TTL</span>
+                        <div class="form-control">{{ttl}}</div>
+                    </div>
+                    <div class="input-group lower-small-margin">
+                        <span class="input-group-addon ccr-small-text">Cache Hit</span>
+                        <div class="form-control">{{cacheHit}}</div>
+                    </div>
+                </div>
+            </div>
+    </script>
+
+    <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
+
+    <script type="application/javascript" src="../assets/scripts/Strings.js"></script>
+    <script type="application/javascript" src="../assets/scripts/AppTools.js"></script>
+    <script type="application/javascript" src="../assets/scripts/Logger.js"></script>
+    <script type="application/javascript" src="../assets/scripts/ExpiringCache.js"></script>
+    <script type="application/javascript" src="../assets/scripts/EventManager.js"></script>
+    <script type="application/javascript" src="../assets/scripts/CentralConfigurationRepositoryClient.js"></script>
+
+    <script type="application/javascript" src="scripts/Presentation.js"></script>
+
+    <title>Marchex Hack Week October 2015</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2" id="positionLeftTackle"></div>
+        <div class="col-lg-2" id="positionLeftGuard"></div>
+        <div class="col-lg-2" id="positionCenter"></div>
+        <div class="col-lg-2" id="positionRightGuard"></div>
+        <div class="col-lg-2" id="positionRightTackle"></div>
+        <div class="col-lg-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2" id="positionWideReceiver1"></div>
+        <div class="col-lg-2" id="positionTightEnd1"></div>
+        <div class="col-lg-2" id="positionQuarterback"></div>
+        <div class="col-lg-2" id="positionTightEnd2"></div>
+        <div class="col-lg-2" id="positionWideReceiver2"></div>
+        <div class="col-lg-1"></div>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2" id="positionHalfBack"></div>
+        <div class="col-lg-5"></div>
+    </div>
+</div>
+<script type="application/javascript">
+    var presentation = new Presentation();
+    presentation.init();
+    presentation.loadPositions()
+//    presentation.setPosition('positionQuarterback', {position: 'Quarterback', name: 'Russell Wilson', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionCenter', {position: 'Center', name: 'Drew Nowak', ttl: '5', cacheHit: false})
+//
+//    presentation.setPosition('positionRightGuard', {position: 'Right Guard', name: 'J. R. Sweezy', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionLeftGuard', {position: 'Left Guard', name: 'Justin Britt', ttl: '5', cacheHit: false})
+//
+//    presentation.setPosition('positionRightTackle', {position: 'Right Tackle', name: 'Garry Gilliam', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionLeftTackle', {position: 'Left Tackle', name: 'Russell Okung', ttl: '5', cacheHit: false})
+//
+//    presentation.setPosition('positionTightEnd1', {position: 'Tight End', name: 'Jimmy Graham', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionTightEnd2', {position: 'Running Back', name: 'Marshawn Lynch', ttl: '5', cacheHit: false})
+//
+//    presentation.setPosition('positionWideReceiver1', {position: 'Wide Receiver', name: 'Doug Baldwin', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionWideReceiver2', {position: 'Wide Receiver', name: 'Jermaine Kearse', ttl: '5', cacheHit: false})
+//    presentation.setPosition('positionHalfBack', {position: 'Full Back', name: 'Will Tukuafu', ttl: '5', cacheHit: false})
+</script>
+</body>
+</html>

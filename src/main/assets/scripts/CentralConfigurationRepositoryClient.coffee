@@ -2,7 +2,7 @@
 
 window.CentralConfigurationRepositoryClient = class CentralConfigurationRepositoryClient
   constructor: (@logger, @eventManager, opts = {}) ->
-    @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 80 }}, opts)
+    @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 35487 }}, opts)
     @cache = new ExpiringCache()
 
   buildWebQuery: (url, successEvent, failureEvent, success = null, failure = null) ->
@@ -12,6 +12,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
     logger: @logger,
     eventManager: @eventManager,
     success: (result) ->
+      result.cacheHit = false
       success(result) if success?
       @eventManager.dispatchEvent(successEvent, result)
       @logger.debug("ServiceClient::AjaxCall to #{url} succeeded")
@@ -84,7 +85,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
 
     if cfg
       @logger.debug("CentralConfigurationRepositoryClient::retrieveConfigurations #{path} found in cache")
-      webQuery.success({ configuration: [ cfg ] })
+      webQuery.success({ configuration: [ cfg ], cacheHit: true })
 
     else
       webQuery.execute()
