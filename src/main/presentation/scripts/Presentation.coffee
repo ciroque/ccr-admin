@@ -6,7 +6,6 @@ window.Presentation = class Presentation
     @logger = new window.Logger({level: LogLevel.ALL})
     @eventManager = new window.EventManager(@logger)
     @ccrClient = new window.CentralConfigurationRepositoryClient(@logger, @eventManager)
-    @logger.debug("Presentation::ctor #{JSON.stringify(@ccrClient)}")
 
   init: () ->
     @logger.debug('Presentation::init')
@@ -43,5 +42,8 @@ window.Presentation = class Presentation
       'positionTightEnd2',
       'positionHalfBack'
     ]
-    console.log(position) for position in POSITIONS
     @ccrClient.retrieveConfigurations('NFL', 'Seahawks', 'Offense', position) for position in POSITIONS
+
+  run: () ->
+    @init()
+    @loadPositions()
