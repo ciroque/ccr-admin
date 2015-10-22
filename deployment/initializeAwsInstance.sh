@@ -14,7 +14,7 @@ sudo su -c "gem install sass"
 
 popd ~
 
-git clone https://github.com/ciroque/ccr-admin.git
+git clone -b HACKWEEKOCT2015 https://github.com/ciroque/ccr-admin.git
 
 popd > /dev/null
 
