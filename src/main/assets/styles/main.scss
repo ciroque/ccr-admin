@@ -1,7 +1,7 @@
 
 @import 'variables';
 
-@import '../../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss';
+@import '/bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss';
 
 .lower-small-margin {
   margin-bottom: $small-margin-pixels;
@@ -16,7 +16,6 @@
 }
 
 .ccr-page-header {
-  background-color: #007069;
   color: $brand-primary;
   font-weight: bold;
 }

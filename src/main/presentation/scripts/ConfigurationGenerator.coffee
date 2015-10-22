@@ -105,7 +105,7 @@ window.ConfigurationGenerator = class ConfigurationGenerator
   postToService: (configurations, callback = null) ->
     jQuery.ajax({
       type: 'POST',
-      url: 'http://localhost:35487/ccr/schedule/',
+      url: 'http://54.187.190.215:8378/ccr/schedule/',
       data: JSON.stringify(configuration),
       dataType: 'json',
       contentType: 'application/json',
