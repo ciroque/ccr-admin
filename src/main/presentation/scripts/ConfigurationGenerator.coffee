@@ -2,6 +2,8 @@
 
 window.ConfigurationGenerator = class ConfigurationGenerator
 
+  URI = 'http://localhost:8378/ccr/schedule/'
+
   ENVIRONMENTS = ['prod', 'qa', 'devint', 'dev', 'integration']
   APPLICATIONS = ['ccr', 'CCRAdmin', 'SampleApp', 'Avenger', 'BillabilityService', 'BillabilityAnnotator']
   SCOPES = ['service', 'logging', 'appearance']
@@ -105,9 +107,18 @@ window.ConfigurationGenerator = class ConfigurationGenerator
   postToService: (configurations, callback = null) ->
     jQuery.ajax({
       type: 'POST',
-      url: 'http://54.187.190.215:8378/ccr/schedule/',
+      url: URI,
       data: JSON.stringify(configuration),
       dataType: 'json',
       contentType: 'application/json',
       'success': (d,r,x) -> callback({result: r, data: JSON.stringify(d)}) if callback
     }) for configuration in configurations
+
+
+  clearDatastore: () ->
+    jQuery.ajax({
+      url: URI,
+      type: "DELETE",
+      success: (result) ->
+        console.log("ServiceClient::AjaxCall to DELETE succeeded")
+    })
