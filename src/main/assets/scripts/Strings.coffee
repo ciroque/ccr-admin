@@ -33,8 +33,8 @@ window.Strings = class @Strings
 
   class @ServiceLocation
     @CcrProtocol = 'http'
-    @CcrHost = 'localhost'
-    @CcrPort = '80'
+    @CcrHost = '54.187.190.215'
+    @CcrPort = '8378'
 
   class @ServicePaths
     @RootPath = 'ccr'
