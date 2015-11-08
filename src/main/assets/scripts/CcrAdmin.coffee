@@ -5,7 +5,7 @@ window.CcrAdmin = class CcrAdmin
     @logger = new Logger({level: LogLevel.ALL})
     @eventManager = new EventManager(@logger)
     @eventMapper = new EventMapper(@logger, @eventManager)
-    @ccrClient = new CentralConfigurationRepositoryClient(@logger, @eventManager, { ccrService: { protocol: 'http', host: 'localhost', port: 35487 } })
+    @ccrClient = new CentralConfigurationRepositoryClient(@logger, @eventManager, { ccrService: { protocol: 'http', host: 'localhost', port: 8378 } })
     @ccrClientEventWatcher = new CcrClientEventWatcher(@logger, @eventManager, @ccrClient)
     uiTemplates = new UiTemplates()
     uiTemplates.init()

@@ -38,6 +38,6 @@ window.Strings = class @Strings
 
   class @ServicePaths
     @RootPath = 'ccr'
-    @SettingSegment = 'settings'
+    @SettingSegment = 'configurations'
 
 

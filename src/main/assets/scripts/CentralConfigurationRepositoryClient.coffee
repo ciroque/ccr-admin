@@ -2,7 +2,7 @@
 
 window.CentralConfigurationRepositoryClient = class CentralConfigurationRepositoryClient
   constructor: (@logger, @eventManager, opts = {}) ->
-    @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 35487 }}, opts)
+    @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 8378 }}, opts)
     @cache = new ExpiringCache()
 
   buildWebQuery: (url, successEvent, failureEvent, success = null, failure = null) ->
