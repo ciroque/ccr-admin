@@ -21,10 +21,15 @@
 }
 
 .ccr-label {
-  font-family: "Courier New";
+  font-family: "Courier New", serif;
   color: $brand-primary;
 }
 
 .ccr-small-text {
   font-size: smaller;
+}
+
+.ccr-scrolling-area {
+  overflow-x: scroll;
+  max-height: 240px;
 }

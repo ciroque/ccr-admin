@@ -10,47 +10,77 @@
     </script>
     <script type="x-tmpl-mustache" id="valuePanel-mst">
         <div class="list-group-item list-item-group-normal lower-large-margin">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Value</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon ccr-small-text">Value</span>
 
-                        <div class="form-control">{{value}}</div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Value</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group lower-small-margin">
+                                <span class="input-group-addon ccr-small-text">Value</span>
+
+                                <div class="form-control">{{value}}</div>
+                            </div>
+                            <div class="input-group lower-small-margin">
+                                <span class="input-group-addon ccr-small-text">Source ID</span>
+
+                                <div class="form-control">{{key.sourceId}}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon ccr-small-text">Source ID</span>
-
-                        <div class="form-control">{{key.sourceId}}</div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Scheduling</h3>
+                        </div>
+                        <div class="panel-body">
+                            [[LIST GOES HERE]]
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Temporality</h3>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Temporality</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group lower-small-margin">
+                                <span class="input-group-addon ccr-small-text">Time to Live</span>
+
+                                <div class="form-control">{{temporality.ttl}}</div>
+                            </div>
+                            <div class="input-group lower-small-margin">
+                                <span class="input-group-addon ccr-small-text">Effective At</span>
+
+                                <div class="form-control ccr-small-text">{{temporality.effectiveAt}}</div>
+                            </div>
+                            <div class="input-group lower-small-margin">
+                                <span class="input-group-addon ccr-small-text">Expires At</span>
+
+                                <div class="form-control ccr-small-text">{{temporality.expiresAt}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon ccr-small-text">Time to Live</span>
-
-                        <div class="form-control">{{temporality.ttl}}</div>
-                    </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon ccr-small-text">Effective At</span>
-
-                        <div class="form-control ccr-small-text">{{temporality.effectiveAt}}</div>
-                    </div>
-                    <div class="input-group lower-small-margin">
-                        <span class="input-group-addon ccr-small-text">Expires At</span>
-
-                        <div class="form-control ccr-small-text">{{temporality.expiresAt}}</div>
+                <div class="col-lg-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Auditing</h3>
+                        </div>
+                        <div class="panel-body">
+                            [[LIST GOES HERE]]
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </script>
 
 
@@ -76,24 +106,26 @@
     <div class="page-header ccr-page-header">
         <h3>Central Configuration Repository Administration</h3>
     </div>
-    <div class="row">
-        <div class="col-lg-2">
+    <div class="row" style="max-height: 260px">
+        <div class="col-lg-3">
             <div class="h3 ccr-label">Environments</div>
-            <div class="list-group" id="environmentsList"></div>
+            <div class="list-group ccr-scrolling-area" id="environmentsList"></div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="h3 ccr-label">Applications</div>
-            <div class="list-group" id="applicationsList"></div>
+            <div class="list-group ccr-scrolling-area" id="applicationsList"></div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="h3 ccr-label">Scopes</div>
-            <div class="list-group" id="scopesList"></div>
+            <div class="list-group ccr-scrolling-area" id="scopesList"></div>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="h3 ccr-label">Settings</div>
-            <div class="list-group" id="settingsList"></div>
+            <div class="list-group ccr-scrolling-area" id="settingsList"></div>
         </div>
-        <div class="col-lg-4">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
             <div class="h3 ccr-label">Configurations</div>
             <div class="list-group" id="configurationList"></div>
         </div>
