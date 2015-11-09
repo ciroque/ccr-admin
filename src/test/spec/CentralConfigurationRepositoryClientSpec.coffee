@@ -35,6 +35,10 @@ describe "CentralConfigurationRepositoryClient", ->
     }]
   }
 
+  AUDIT_HISTORY = {
+
+  }
+
   beforeEach(() ->
     @logSnk = new TestLoggingSink()
     @logger = new Logger({level: LogLevel.ALL, sink: @logSnk})
@@ -322,3 +326,29 @@ describe "CentralConfigurationRepositoryClient", ->
       expect(cacheStats.cacheHits).toBe 1
       expect(cacheStats.cacheMisses).toBe 1
       expect(cacheStats.cacheExpiries).toBe 1
+
+  describe 'Audit History', ->
+
+    uuid = ->
+    'xxxxxxxx-xxxx-axxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else (r & 0x3 | 0x8)
+      v.toString(16)
+    )
+
+    it 'loads the audit history for an id', ->
+      id = uuid()
+      querySuccessFired = 0
+      queryFailureFired = 0
+      mockAjaxProvider = new MockAjaxProvider(@logger, { results: AUDIT_HISTORY })
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+      successEventHandler = (args) -> expect(args).toBe CONFIGURATIONS; querySuccessFired = true
+      failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
+
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ConfigurationQuerySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ConfigurationQueryFailure, failedEventHandler)
+
+      client.retrieveAuditHistory(id)
+
+      

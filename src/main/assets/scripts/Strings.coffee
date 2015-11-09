@@ -12,6 +12,8 @@ window.Strings = class @Strings
       @SettingQueryFailure        = 'STGQRYF'
       @ConfigurationQuerySuccess  = 'CFGQRYS'
       @ConfigurationQueryFailure  = 'CFGQRYF'
+      @AuditHistorySuccess        = 'AHQRYS'
+      @AuditHistoryFailure        = 'AHQRYF'
 
     class @UiEvents
       @EnvironmentSelected        = 'UIENVSEL'
