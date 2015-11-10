@@ -64,7 +64,7 @@ describe "CentralConfigurationRepositoryClient", ->
       client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = (result) -> expect(result).toBe ENVIRONMENTS; successCalled = true
       errorHandler = (error) -> fail("error handler should not have been called!"); errorCalled = true
-      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
+      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, Strings.ServicePaths.ConfigurationSegment, successHandler, errorHandler)
       webQuery.execute()
       expect(successCalled).toBe true
       expect(errorCalled).toBe false
@@ -92,7 +92,7 @@ describe "CentralConfigurationRepositoryClient", ->
       client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = () -> fail("success handler should not have been called!"); successCalled = true
       errorHandler = (error) -> expect(error).toBe ERROR_MSG; errorCalled = true
-      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
+      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, Strings.ServicePaths.ConfigurationSegment, successHandler, errorHandler)
       webQuery.execute()
       expect(successCalled).toBe false
       expect(errorCalled).toBe true
@@ -327,31 +327,32 @@ describe "CentralConfigurationRepositoryClient", ->
       expect(cacheStats.cacheMisses).toBe 1
       expect(cacheStats.cacheExpiries).toBe 1
 
-#  describe 'Audit History', ->
-#
-#    uuid = ->
-#    'xxxxxxxx-xxxx-axxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) ->
-#      r = Math.random() * 16 | 0
-#      v = if c is 'x' then r else (r & 0x3 | 0x8)
-#      v.toString(16)
-#    )
-#
-#    it 'loads the audit history for an id', ->
-#      id = uuid()
-#      querySuccessFired = 0
-#      queryFailureFired = 0
-#      mockAjaxProvider = new MockAjaxProvider(@logger, { results: AUDIT_HISTORY })
-#      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
-#
-#      successEventHandler = (args) -> expect(args).toBe CONFIGURATIONS; querySuccessFired = true
-#      failedEventHandler = (args) -> expect(args).toBe ERROR_MSG; queryFailureFired = true
-#
-#      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ConfigurationQuerySuccess, successEventHandler)
-#      @evtMgr.registerHandler(Strings.Events.ServiceQueries.ConfigurationQueryFailure, failedEventHandler)
-#
-#      client.retrieveAuditHistory(id)
-#
-#      expect(querySuccessFired).toBe 1
-#      expect(queryFailureFired).toBe 0
+  describe 'Audit History', ->
 
+    uuid = ->
+    'xxxxxxxx-xxxx-axxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else (r & 0x3 | 0x8)
+      v.toString(16)
+    )
 
+    it 'handles a successful call to load the audit history', ->
+      id = uuid()
+      querySuccessFired = 0
+      queryFailureFired = 0
+      mockAjaxProvider = new MockAjaxProvider(@logger, { results: AUDIT_HISTORY })
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+      successEventHandler = (args) -> console.log(JSON.stringify(args)); querySuccessFired++
+      failedEventHandler = (args) ->  console.log(JSON.stringify(args)); queryFailureFired++
+
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.AuditHistorySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.AuditHistoryFailure, failedEventHandler)
+
+      client.retrieveAuditHistory(id)
+
+      console.log(@logSnk.getEvents())
+
+      expect(querySuccessFired).toBe 1
+      expect(queryFailureFired).toBe 0
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/auditing/")

@@ -40,6 +40,7 @@ window.Strings = class @Strings
 
   class @ServicePaths
     @RootPath = 'ccr'
-    @SettingSegment = 'configurations'
+    @ConfigurationSegment = 'configurations'
+    @AuditingSegment = 'auditing'
 
 

@@ -31,5 +31,5 @@
 
 .ccr-scrolling-area {
   overflow-x: scroll;
-  max-height: 240px;
+  max-height: $scrolling-list-max-height;
 }
