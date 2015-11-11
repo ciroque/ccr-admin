@@ -100,4 +100,3 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
       Strings.Events.ServiceQueries.AuditHistoryFailure,
       Strings.ServicePaths.AuditingSegment, null, null
     ).execute()
-

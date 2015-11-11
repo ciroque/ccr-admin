@@ -78,10 +78,10 @@ window.CcrAdmin = class CcrAdmin
     @ccrClientEventWatcher.init()
 
     @eventManager.dispatchEvents(
-      Strings.Events.UiEvents.ClearEnvironments,
-      Strings.Events.UiEvents.ClearApplications,
-      Strings.Events.UiEvents.ClearScopes,
-      Strings.Events.UiEvents.ClearSettings,
-      Strings.Events.UiEvents.ClearConfiguration
+      {name: Strings.Events.UiEvents.ClearEnvironments, args: {}},
+      {name: Strings.Events.UiEvents.ClearApplications, args: {}},
+      {name: Strings.Events.UiEvents.ClearScopes, args: {}},
+      {name: Strings.Events.UiEvents.ClearSettings, args: {}},
+      {name: Strings.Events.UiEvents.ClearConfiguration, args: {}}
     )
     @eventManager.dispatchEvent(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, {})

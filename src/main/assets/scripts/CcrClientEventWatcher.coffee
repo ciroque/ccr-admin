@@ -11,32 +11,32 @@ window.CcrClientEventWatcher = class CcrClientEventWatcher
     eventManager = @eventManager
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, () ->
       eventManager.dispatchEvents(
-        Strings.Events.UiEvents.ClearEnvironments,
-        Strings.Events.UiEvents.ClearApplications,
-        Strings.Events.UiEvents.ClearScopes,
-        Strings.Events.UiEvents.ClearSettings,
-        Strings.Events.UiEvents.ClearConfiguration)
+        { name: Strings.Events.UiEvents.ClearEnvironments, args: {}},
+        { name: Strings.Events.UiEvents.ClearApplications, args: {}},
+        { name: Strings.Events.UiEvents.ClearScopes, args: {}},
+        { name: Strings.Events.UiEvents.ClearSettings, args: {}},
+        { name: Strings.Events.UiEvents.ClearConfiguration, args: {}})
       ccrClient.retrieveEnvironments()
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateApplicationQuery, (args) ->
       eventManager.dispatchEvents(
-        Strings.Events.UiEvents.ClearApplications,
-        Strings.Events.UiEvents.ClearScopes,
-        Strings.Events.UiEvents.ClearSettings,
-        Strings.Events.UiEvents.ClearConfiguration)
+        { name: Strings.Events.UiEvents.ClearApplications, args: {}},
+        { name: Strings.Events.UiEvents.ClearScopes, args: {}},
+        { name: Strings.Events.UiEvents.ClearSettings, args: {}},
+        { name: Strings.Events.UiEvents.ClearConfiguration, args: {}})
       ccrClient.retrieveApplications(args.value)
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateScopeQuery, (args) ->
       eventManager.dispatchEvents(
-        Strings.Events.UiEvents.ClearScopes,
-        Strings.Events.UiEvents.ClearSettings,
-        Strings.Events.UiEvents.ClearConfiguration)
+        { name: Strings.Events.UiEvents.ClearScopes, args: {}},
+        { name: Strings.Events.UiEvents.ClearSettings, args: {}},
+        { name: Strings.Events.UiEvents.ClearConfiguration, args: {}})
       ccrClient.retrieveScopes(args.env, args.value)
     )
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateSettingQuery, (args) ->
       eventManager.dispatchEvents(
-        Strings.Events.UiEvents.ClearSettings,
-        Strings.Events.UiEvents.ClearConfiguration
+        { name: Strings.Events.UiEvents.ClearSettings, args: {}},
+        { name: Strings.Events.UiEvents.ClearConfiguration, args: {}}
       )
       ccrClient.retrieveSettings(args.env, args.app, args.value)
     )
