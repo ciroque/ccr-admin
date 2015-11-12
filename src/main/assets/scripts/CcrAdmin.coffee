@@ -61,6 +61,7 @@ window.CcrAdmin = class CcrAdmin
     @eventMapper.mapEvent(Strings.Events.UiEvents.ApplicationSelected, Strings.Events.ServiceCallTriggers.InitiateScopeQuery)
     @eventMapper.mapEvent(Strings.Events.UiEvents.ScopeSelected, Strings.Events.ServiceCallTriggers.InitiateSettingQuery)
     @eventMapper.mapEvent(Strings.Events.UiEvents.SettingSelected, Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery)
+    @eventMapper.mapEvent(Strings.Events.ServiceQueries.ConfigurationQuerySuccess, Strings.Events.ServiceCallTriggers.InitiateAuditingQuery)
 
   init: () ->
     @logger.debug("CcrAdmin::init")

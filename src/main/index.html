@@ -8,6 +8,9 @@
     <script type="x-tmpl-mustache" id="listItem-mst">
         <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}', env: '{{env}}', app: '{{app}}', scp: '{{scp}}', stg: '{{stg}}' })" class="list-group-item list-item-group-normal ccr-small-text">{{name}}</a>
     </script>
+    <script type="x-tmpl-mustache" id="configScheduleList-mst">
+        <a href="#" onclick="window.ccrAdmin.EventManager.dispatchEvent('{{evt}}', { value: '{{name}}', env: '{{env}}', app: '{{app}}', scp: '{{scp}}', stg: '{{stg}}' })" class="list-group-item list-item-group-normal ccr-small-text">{{name}}</a>
+    </script>
     <script type="x-tmpl-mustache" id="valuePanel-mst">
         <div class="list-group-item list-item-group-normal lower-large-margin">
 
@@ -37,7 +40,9 @@
                             <h3 class="panel-title">Scheduling</h3>
                         </div>
                         <div class="panel-body">
-                            [[LIST GOES HERE]]
+                            <div class="list-group" id="scheduleList">
+
+                            </div>
                         </div>
                     </div>
                 </div>

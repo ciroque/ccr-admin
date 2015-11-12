@@ -32,11 +32,8 @@ window.Strings = class @Strings
       @InitiateScopeQuery         = 'SCPQRYI'
       @InitiateSettingQuery       = 'STGQRYI'
       @InitiateConfigurationQuery = 'CFGQRYI'
-
-  class @ServiceLocation
-    @CcrProtocol = 'http'
-    @CcrHost = '54.187.190.215'
-    @CcrPort = '8378'
+      @InitiateSchedulingQuery    = 'SCHQRYI'
+      @InitiateAuditingQuery      = 'AUDQRYI'
 
   class @ServicePaths
     @RootPath = 'ccr'

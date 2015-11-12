@@ -9,6 +9,7 @@ window.CcrClientEventWatcher = class CcrClientEventWatcher
   registerEventHandlers: () ->
     ccrClient = @ccrClient
     eventManager = @eventManager
+    logger = @logger
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, () ->
       eventManager.dispatchEvents(
         { name: Strings.Events.UiEvents.ClearEnvironments, args: {}},
@@ -43,4 +44,7 @@ window.CcrClientEventWatcher = class CcrClientEventWatcher
     @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery, (args) ->
       eventManager.dispatchEvent(Strings.Events.UiEvents.ClearConfiguration)
       ccrClient.retrieveConfigurations(args.env, args.app, args.scp, args.value)
+    )
+    @eventManager.registerHandler(Strings.Events.ServiceCallTriggers.InitiateAuditingQuery, (args) ->
+      ccrClient.retrieveAuditHistory(cfg._id) for cfg in args.configuration
     )
