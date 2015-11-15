@@ -2,7 +2,7 @@
 
 echo Removing previously transpiled files...
 find . -name '*.css' -delete
-find . -name '*.map./' -delete
+find . -name '*.map' -delete
 
 
 echo Transpiling styles...
