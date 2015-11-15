@@ -5,10 +5,10 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
     @opts = AppTools.merge({ lib: $, ccrService: { protocol: 'http', host: 'localhost', port: 8378 }}, opts)
     @cache = new ExpiringCache()
 
-  buildWebQuery: (url, successEvent, failureEvent, success = null, failure = null) ->
+  buildWebQuery: (url, successEvent, failureEvent, segment = Strings.ServicePaths.ConfigurationSegment, success = null, failure = null) ->
     {
     lib: @opts.lib,
-    url: "#{@opts.ccrService.protocol}://#{@opts.ccrService.host}:#{@opts.ccrService.port}/#{Strings.ServicePaths.RootPath}/#{Strings.ServicePaths.SettingSegment}/#{url}",
+    url: "#{@opts.ccrService.protocol}://#{@opts.ccrService.host}:#{@opts.ccrService.port}/#{Strings.ServicePaths.RootPath}/#{segment}/#{url}",
     logger: @logger,
     eventManager: @eventManager,
     success: (result) ->
@@ -77,6 +77,7 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
       "#{buildQueryPath(true)}",
       Strings.Events.ServiceQueries.ConfigurationQuerySuccess,
       Strings.Events.ServiceQueries.ConfigurationQueryFailure,
+      Strings.ServicePaths.ConfigurationSegment,
       successHandler
     )
 
@@ -89,3 +90,13 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
 
     else
       webQuery.execute()
+
+  retrieveAuditHistory: (id) ->
+    @logger.debug('CentralConfigurationRepositoryClient::retrieveAuditHistory')
+
+    @buildWebQuery(
+      id,
+      Strings.Events.ServiceQueries.AuditHistorySuccess,
+      Strings.Events.ServiceQueries.AuditHistoryFailure,
+      "#{Strings.ServicePaths.ConfigurationSegment}/#{Strings.ServicePaths.AuditingSegment}", null, null
+    ).execute()

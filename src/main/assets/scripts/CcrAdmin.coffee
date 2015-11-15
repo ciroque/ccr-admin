@@ -61,6 +61,7 @@ window.CcrAdmin = class CcrAdmin
     @eventMapper.mapEvent(Strings.Events.UiEvents.ApplicationSelected, Strings.Events.ServiceCallTriggers.InitiateScopeQuery)
     @eventMapper.mapEvent(Strings.Events.UiEvents.ScopeSelected, Strings.Events.ServiceCallTriggers.InitiateSettingQuery)
     @eventMapper.mapEvent(Strings.Events.UiEvents.SettingSelected, Strings.Events.ServiceCallTriggers.InitiateConfigurationQuery)
+    @eventMapper.mapEvent(Strings.Events.ServiceQueries.ConfigurationQuerySuccess, Strings.Events.ServiceCallTriggers.InitiateAuditingQuery)
 
   init: () ->
     @logger.debug("CcrAdmin::init")
@@ -78,10 +79,10 @@ window.CcrAdmin = class CcrAdmin
     @ccrClientEventWatcher.init()
 
     @eventManager.dispatchEvents(
-      Strings.Events.UiEvents.ClearEnvironments,
-      Strings.Events.UiEvents.ClearApplications,
-      Strings.Events.UiEvents.ClearScopes,
-      Strings.Events.UiEvents.ClearSettings,
-      Strings.Events.UiEvents.ClearConfiguration
+      {name: Strings.Events.UiEvents.ClearEnvironments, args: {}},
+      {name: Strings.Events.UiEvents.ClearApplications, args: {}},
+      {name: Strings.Events.UiEvents.ClearScopes, args: {}},
+      {name: Strings.Events.UiEvents.ClearSettings, args: {}},
+      {name: Strings.Events.UiEvents.ClearConfiguration, args: {}}
     )
     @eventManager.dispatchEvent(Strings.Events.ServiceCallTriggers.InitiateEnvironmentQuery, {})

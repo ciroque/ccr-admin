@@ -2,7 +2,7 @@
 
 window.ConfigurationGenerator = class ConfigurationGenerator
 
-  URI = 'http://localhost:8378/ccr/schedule/'
+  URI = 'http://localhost:8378/ccr/scheduling/'
 
   ENVIRONMENTS = ['prod', 'qa', 'devint', 'dev', 'integration']
   APPLICATIONS = ['ccr', 'CCRAdmin', 'SampleApp', 'Avenger', 'BillabilityService', 'BillabilityAnnotator']

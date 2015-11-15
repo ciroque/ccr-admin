@@ -19,4 +19,4 @@ window.EventManager = class EventManager
     @
 
   dispatchEvents: (events...) ->
-    @dispatchEvent(name, {}) for name in events if events?
+    @dispatchEvent(event.name, event.args) for event in events if events?

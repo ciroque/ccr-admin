@@ -9,7 +9,7 @@ describe "CentralConfigurationRepositoryClient", ->
   TODAY = new Date()
   YESTERDAY = new Date().setDate(TODAY.getDate() - 1)
   TOMORROW = new Date().setDate(TODAY.getDate() + 1)
-  URL = 'http://localhost:8378/ccr/settings/'
+  URL = 'http://localhost:8378/ccr/configurations/'
   EVT_SUCCESS = 'TestSuccessfulEvent'
   EVT_FAILURE = 'TestFailedEvent'
   ERROR_MSG = "THIS IS A FAILURE MESSAGE"
@@ -33,6 +33,10 @@ describe "CentralConfigurationRepositoryClient", ->
         ttl: 1
       }
     }]
+  }
+
+  AUDIT_HISTORY = {
+
   }
 
   beforeEach(() ->
@@ -60,7 +64,7 @@ describe "CentralConfigurationRepositoryClient", ->
       client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = (result) -> expect(result).toBe ENVIRONMENTS; successCalled = true
       errorHandler = (error) -> fail("error handler should not have been called!"); errorCalled = true
-      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
+      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, Strings.ServicePaths.ConfigurationSegment, successHandler, errorHandler)
       webQuery.execute()
       expect(successCalled).toBe true
       expect(errorCalled).toBe false
@@ -88,7 +92,7 @@ describe "CentralConfigurationRepositoryClient", ->
       client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, {lib: mockAjaxProvider})
       successHandler = () -> fail("success handler should not have been called!"); successCalled = true
       errorHandler = (error) -> expect(error).toBe ERROR_MSG; errorCalled = true
-      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, successHandler, errorHandler)
+      webQuery = client.buildWebQuery(URL, EVT_SUCCESS, EVT_FAILURE, Strings.ServicePaths.ConfigurationSegment, successHandler, errorHandler)
       webQuery.execute()
       expect(successCalled).toBe false
       expect(errorCalled).toBe true
@@ -128,7 +132,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations")
 
     it 'handles an unsuccessful call to retrieve environments', ->
       environmentQuerySuccessFired = false
@@ -146,7 +150,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(environmentQuerySuccessFired).toBe false
       expect(environmentQueryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/setting")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations")
 
   describe 'retrieveApplications', ->
     it 'handles a successful call to retrieve applications', ->
@@ -165,7 +169,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}")
 
     it 'handles an unsuccessful call to retrieve applications', ->
       querySuccessFired = false
@@ -183,7 +187,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}")
 
   describe 'retrieveScopes', ->
     it 'handles a successful call to retrieve scopes', ->
@@ -202,7 +206,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
 
     it 'handles an unsuccessful call to retrieve scopes', ->
       querySuccessFired = false
@@ -220,7 +224,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}")
 
   describe 'retrieveSettings', ->
     it 'handles a successful call to retrieve settings', ->
@@ -239,7 +243,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
 
     it 'handles an unsuccessful call to retrieve settings', ->
       querySuccessFired = false
@@ -257,7 +261,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe false
       expect(queryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}")
 
   describe 'retrieveConfigurations', ->
     it 'handles a successful call to retrieve configurations', ->
@@ -276,7 +280,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe true
       expect(queryFailureFired).toBe false
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
 
     it 'handles an unsuccessful call to retrieve configurations', ->
       scopeQuerySuccessFired = false
@@ -294,7 +298,7 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(scopeQuerySuccessFired).toBe false
       expect(scopeQueryFailureFired).toBe true
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
 
     it 'uses the cache for settings', ->
       querySuccessFired = 0
@@ -317,8 +321,38 @@ describe "CentralConfigurationRepositoryClient", ->
 
       expect(querySuccessFired).toBe 3
       expect(queryFailureFired).toBe 0
-      expect(@logSnk.getEvents()[1]).toContain("/ccr/settings/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/configurations/#{ENVIRONMENTS[0]}/#{APPLICATIONS[0]}/#{SCOPES[0]}/#{SETTINGS[0]}")
       expect(cacheStats.cacheAttempts).toBe 3
       expect(cacheStats.cacheHits).toBe 1
       expect(cacheStats.cacheMisses).toBe 1
       expect(cacheStats.cacheExpiries).toBe 1
+
+  describe 'Audit History', ->
+
+    uuid = ->
+    'xxxxxxxx-xxxx-axxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) ->
+      r = Math.random() * 16 | 0
+      v = if c is 'x' then r else (r & 0x3 | 0x8)
+      v.toString(16)
+    )
+
+    it 'handles a successful call to load the audit history', ->
+      id = uuid()
+      querySuccessFired = 0
+      queryFailureFired = 0
+      mockAjaxProvider = new MockAjaxProvider(@logger, { results: AUDIT_HISTORY })
+      client = new CentralConfigurationRepositoryClient(@logger, @evtMgr, { lib: mockAjaxProvider })
+
+      successEventHandler = (args) -> console.log(JSON.stringify(args)); querySuccessFired++
+      failedEventHandler = (args) ->  console.log(JSON.stringify(args)); queryFailureFired++
+
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.AuditHistorySuccess, successEventHandler)
+      @evtMgr.registerHandler(Strings.Events.ServiceQueries.AuditHistoryFailure, failedEventHandler)
+
+      client.retrieveAuditHistory(id)
+
+      console.log(@logSnk.getEvents())
+
+      expect(querySuccessFired).toBe 1
+      expect(queryFailureFired).toBe 0
+      expect(@logSnk.getEvents()[1]).toContain("/ccr/auditing/")

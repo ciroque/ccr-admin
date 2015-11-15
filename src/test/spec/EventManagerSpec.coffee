@@ -74,9 +74,9 @@ describe 'EventManager', ->
     expect(actualArgs).toBe expectedArgs
 
   it 'supports batch event dispatching', ->
-    eventOne = 'ONE'
-    eventTwo = 'TWO'
-    eventThree = 'THREE'
+    eventOne = { name: 'ONE', args: {} }
+    eventTwo = { name: 'TWO', args: {}}
+    eventThree = { name: 'THREE', args: {} }
     eventOneCalled = 0
     eventTwoCalled = 0
     eventThreeCalled = 0
@@ -84,9 +84,9 @@ describe 'EventManager', ->
     handlerTwo = () -> eventTwoCalled++
     handlerThree = () -> eventThreeCalled++
 
-    @eventManager.registerHandler(eventOne, handlerOne)
-    @eventManager.registerHandler(eventTwo, handlerTwo)
-    @eventManager.registerHandler(eventThree, handlerThree)
+    @eventManager.registerHandler(eventOne.name, handlerOne)
+    @eventManager.registerHandler(eventTwo.name, handlerTwo)
+    @eventManager.registerHandler(eventThree.name, handlerThree)
 
     @eventManager.dispatchEvents(eventOne, eventTwo)
     expect(eventOneCalled).toBe 1
@@ -98,7 +98,7 @@ describe 'EventManager', ->
     expect(eventTwoCalled).toBe 1
     expect(eventThreeCalled).toBe 2
 
-    @eventManager.dispatchEvent(eventOne, {})
+    @eventManager.dispatchEvent(eventOne.name, {})
     expect(eventOneCalled).toBe 2
     expect(eventTwoCalled).toBe 1
     expect(eventThreeCalled).toBe 2
