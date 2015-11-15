@@ -50,7 +50,6 @@ window.Presentation = class Presentation
   updateCacheStats: () ->
     stats = @ccrClient.cache.getStats()
     $('#cacheStats').html(Mustache.render(@cacheStatsTemplate, stats))
-#    console.log("CacheStats :: #{JSON.stringify(stats)}")
 
   run: () ->
     @init()

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../assets/styles/main.css">
-    <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="application/javascript" src="../assets/vendor/jquery.js"></script>
     <script type="application/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
+            src="../assets/vendor/mustache.js"></script>
     <script type="application/javascript" src="scripts/Seahawks.js"></script>
     <script type="application/javascript" src="scripts/ConfigurationGenerator.js"></script>
 
@@ -21,6 +21,7 @@
     Central Configuration Repository - Configuration Generator
 </div>
 <div class="row btn-toolbar">
+    <div class="btn btn-danger" onclick="handleClearDatastoreClicked()">Clear Datastore</div>
     <div class="btn btn-success" onclick="handleGenerateClicked()">Generate</div>
     <div class="btn btn-success" onclick="generateSeahawksOffense()">Generate Seahawks</div>
 </div>
@@ -54,6 +55,10 @@
         configurations = seahawks.generateConfigurations();
 //                el.html(JSON.stringify(configurations));
         generator.postToService(configurations, handlePostResult);
+    }
+
+    function handleClearDatastoreClicked() {
+        generator.clearDatastore();
     }
 </script>
 </body>
