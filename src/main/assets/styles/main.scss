@@ -30,6 +30,7 @@
 }
 
 .ccr-scrolling-area {
-  overflow-x: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   max-height: $scrolling-list-max-height;
 }
