@@ -98,5 +98,5 @@ window.CentralConfigurationRepositoryClient = class CentralConfigurationReposito
       id,
       Strings.Events.ServiceQueries.AuditHistorySuccess,
       Strings.Events.ServiceQueries.AuditHistoryFailure,
-      "#{Strings.ServicePaths.ConfigurationSegment}/#{Strings.ServicePaths.AuditingSegment}", null, null
+      "#{Strings.ServicePaths.AuditingSegment}/#{Strings.ServicePaths.ConfigurationSegment}", null, null
     ).execute()
