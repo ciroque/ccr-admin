@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../assets/styles/main.css">
-    <script type="application/javascript" src="../assets/vendor/jquery.js"></script>
+    <script type="application/javascript" src="../assets/vendor/jquery/dist/jquery.js"></script>
     <script type="application/javascript"
-            src="../assets/vendor/mustache.js"></script>
+            src="../assets/vendor/mustache.js/mustache.js"></script>
     <script type="application/javascript" src="scripts/Seahawks.js"></script>
     <script type="application/javascript" src="scripts/ConfigurationGenerator.js"></script>
 
@@ -40,7 +40,6 @@
         el.empty();
         var configurations = generator.generate();
         var flattened = generator.flattened(configurations);
-//                el.html(JSON.stringify(flattened));
         generator.postToService(flattened, handlePostResult);
     }
 
@@ -53,7 +52,6 @@
         el.empty();
         seahawks = new window.Seahawks();
         configurations = seahawks.generateConfigurations();
-//                el.html(JSON.stringify(configurations));
         generator.postToService(configurations, handlePostResult);
     }
 

@@ -1,7 +1,7 @@
 
 @import 'variables';
 
-@import '../../../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss';
+@import '../vendor/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss';
 
 .lower-small-margin {
   margin-bottom: $small-margin-pixels;
@@ -30,6 +30,7 @@
 }
 
 .ccr-scrolling-area {
-  overflow-x: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   max-height: $scrolling-list-max-height;
 }
